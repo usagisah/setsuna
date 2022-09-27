@@ -24,8 +24,14 @@ function createElement(tag, attrs) {
     : document.createElement(tag, attrs.is)
 }
 
-function getNextSibling(node) {  
-  return node ? node.type === Fragment ? node.anchor : getElementNextSibling(node.el) : null
+function getNextSibling(node) {
+  return node
+    ? node.type === Fragment
+      ? node.anchor
+      : node.el
+        ? getElementNextSibling(node.el)
+        : null
+    : null
 }
 
 function getElementNextSibling(el) {
@@ -891,7 +897,7 @@ function createRenderComponentEffect(options) {
       deps.forEach(u => (u.active ? appendJob(u) : invalid.push(u)));
       invalid.forEach(u => deps.delete(u));
 
-      VNode.el = nextSubTree?.el;
+      VNode.el = nextSubTree ? nextSubTree.el : null;
     } else {
       let nextNode = hydrateNode;
       Object.assign(c, {

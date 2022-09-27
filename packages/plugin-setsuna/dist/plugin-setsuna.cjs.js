@@ -78637,8 +78637,8 @@ function createHash(content = "") {
     .slice(0, 8)
 }
 
-function injectHMR({ id, body }) {
-  createHash(id);
+function injectHMRInfo({ id, body }) {
+  const hash = createHash(id);
   const componentNames = new Set();
   const hmrComponent = [];
   body.forEach(node => {
@@ -78675,33 +78675,36 @@ function injectHMR({ id, body }) {
     }
   });
 
-  //   let code = "\n"
-  //   hmrComponent.forEach(name => {
-  //     code += `\n__SETSUNA_HMR_MAP__.createRecord("${activeOptions.hmrId}")`
-  //     code += `\nimport.meta.hot.accept(mods => {
-  //   if (!mods) return;
-  //   for (const key in mods) {
-  //     const app = mods[key]
-  //     __SETSUNA_HMR_MAP__.invokeReload(app._hmrId, app)
-  //   }
-  // })`
-  //   })
-  //   result.code += code
   body.unshift(
     ...hmrComponent.map(name => {
-      return libExports.types.expressionStatement(
-        libExports.types.assignmentExpression(
-          "=",
-          libExports.types.memberExpression(
-            libExports.types.Identifier(name),
-            libExports.types.Identifier("hmrId"),
-            false
-          ),
-          libExports.types.stringLiteral(id)
+      return [
+        libExports.types.expressionStatement(
+          libExports.types.assignmentExpression(
+            "=",
+            libExports.types.memberExpression(
+              libExports.types.Identifier(name),
+              libExports.types.Identifier("hmrId"),
+              false
+            ),
+            libExports.types.stringLiteral(hash)
+          )
+        ),
+        libExports.types.expressionStatement(
+          libExports.types.assignmentExpression(
+            "=",
+            libExports.types.memberExpression(
+              libExports.types.Identifier(name),
+              libExports.types.Identifier("file"),
+              false
+            ),
+            libExports.types.stringLiteral(id)
+          )
         )
-      )
-    })
+      ]
+    }).flat()
   );
+
+  return hmrComponent
 }
 
 function isExportDeclaration({ type }) {
@@ -78772,6 +78775,24 @@ function injectImport({result}) {
   }
 }
 
+function injectAutoReload({
+  result,
+  hasRender,
+  hasDefineElement,
+  hmrComponent
+}) {
+  if (hasRender) return
+  if (hasDefineElement || (hmrComponent && hmrComponent.length > 0)) {
+    result.code += `\nimport.meta.hot.accept(mods => {
+      if (!mods) return;
+      for (const key in mods) {
+        const app = mods[key]
+        __SETSUNA_HMR_MAP__.invokeReload(app._hmrId, app)
+      }
+    })`;
+  }
+}
+
 function setsunaPlugin() {
   return {
     name: "vite:setsuna",
@@ -78786,6 +78807,10 @@ function setsunaPlugin() {
 
     transform(source, id) {
       if (!id.endsWith("jsx")) return
+
+      let hasRender = false;
+      let hasDefineElement = false;
+      let hmrComponent = null;
       const result = libExports.transformSync(source, {
         ast: true,
         sourceMaps: true,
@@ -78805,14 +78830,25 @@ function setsunaPlugin() {
           {
             visitor: {
               Program(path) {
-                injectHMR({ id, body: path.node.body });
+                hmrComponent = injectHMRInfo({ id, body: path.node.body });
               },
               ImportSpecifier(path) {
                 if (
                   path.parentPath.node.source.value === "@setsuna/setsuna" &&
                   path.node.imported.name === "render" &&
                   path.scope.getBinding("render").referencePaths.length > 0
-                ) ;
+                ) {
+                  hasRender = true;
+                }
+
+                if (
+                  path.parentPath.node.source.value === "@setsuna/setsuna" &&
+                  path.node.imported.name === "defineElement" &&
+                  path.scope.getBinding("defineElement").referencePaths.length >
+                    0
+                ) {
+                  hasDefineElement = true;
+                }
               },
               ExportDefaultDeclaration(path, state) {
                 if (!path.node.declaration.id) {
@@ -78825,6 +78861,7 @@ function setsunaPlugin() {
       });
 
       injectImport({ result });
+      injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent });
       return {
         code: result.code,
         map: result.map

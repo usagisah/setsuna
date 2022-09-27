@@ -47,7 +47,7 @@ export function createRenderComponentEffect(options) {
       deps.forEach(u => (u.active ? appendJob(u) : invalid.push(u)))
       invalid.forEach(u => deps.delete(u))
 
-      VNode.el = nextSubTree?.el
+      VNode.el = nextSubTree ? nextSubTree.el : null
     } else {
       let nextNode = hydrateNode
       Object.assign(c, {

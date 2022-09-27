@@ -1,8 +1,8 @@
 import { transformSync } from "@babel/core"
-import { injectHMR } from "./injectHMR"
+import { injectHMRInfo } from "./injectHMRInfo"
 import { injectImport } from "./injectImport"
-import MagicString from "magic-string"
 import { types } from "@babel/core"
+import { injectAutoReload } from "./injectAutoReload"
 
 export function setsunaPlugin() {
   return {
@@ -20,6 +20,8 @@ export function setsunaPlugin() {
       if (!id.endsWith("jsx")) return
 
       let hasRender = false
+      let hasDefineElement = false
+      let hmrComponent = null
       const result = transformSync(source, {
         ast: true,
         sourceMaps: true,
@@ -39,7 +41,7 @@ export function setsunaPlugin() {
           {
             visitor: {
               Program(path) {
-                injectHMR({ id, body: path.node.body })
+                hmrComponent = injectHMRInfo({ id, body: path.node.body })
               },
               ImportSpecifier(path) {
                 if (
@@ -48,6 +50,15 @@ export function setsunaPlugin() {
                   path.scope.getBinding("render").referencePaths.length > 0
                 ) {
                   hasRender = true
+                }
+
+                if (
+                  path.parentPath.node.source.value === "@setsuna/setsuna" &&
+                  path.node.imported.name === "defineElement" &&
+                  path.scope.getBinding("defineElement").referencePaths.length >
+                    0
+                ) {
+                  hasDefineElement = true
                 }
               },
               ExportDefaultDeclaration(path, state) {
@@ -61,6 +72,8 @@ export function setsunaPlugin() {
       })
 
       injectImport({ result })
+      debugger
+      injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })
       return {
         code: result.code,
         map: result.map

@@ -19,8 +19,14 @@ export function createElement(tag, attrs) {
     : document.createElement(tag, attrs.is)
 }
 
-export function getNextSibling(node) {  
-  return node ? node.type === Fragment ? node.anchor : getElementNextSibling(node.el) : null
+export function getNextSibling(node) {
+  return node
+    ? node.type === Fragment
+      ? node.anchor
+      : node.el
+        ? getElementNextSibling(node.el)
+        : null
+    : null
 }
 
 export function getElementNextSibling(el) {

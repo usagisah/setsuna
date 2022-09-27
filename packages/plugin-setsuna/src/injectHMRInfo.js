@@ -1,7 +1,7 @@
 import { types } from "@babel/core"
 import { createHash } from "./createHash"
 
-export function injectHMR({ id, body }) {
+export function injectHMRInfo({ id, body }) {
   const hash = createHash(id)
   const componentNames = new Set()
   const hmrComponent = []
@@ -39,33 +39,36 @@ export function injectHMR({ id, body }) {
     }
   })
 
-  //   let code = "\n"
-  //   hmrComponent.forEach(name => {
-  //     code += `\n__SETSUNA_HMR_MAP__.createRecord("${activeOptions.hmrId}")`
-  //     code += `\nimport.meta.hot.accept(mods => {
-  //   if (!mods) return;
-  //   for (const key in mods) {
-  //     const app = mods[key]
-  //     __SETSUNA_HMR_MAP__.invokeReload(app._hmrId, app)
-  //   }
-  // })`
-  //   })
-  //   result.code += code
   body.unshift(
     ...hmrComponent.map(name => {
-      return types.expressionStatement(
-        types.assignmentExpression(
-          "=",
-          types.memberExpression(
-            types.Identifier(name),
-            types.Identifier("hmrId"),
-            false
-          ),
-          types.stringLiteral(id)
+      return [
+        types.expressionStatement(
+          types.assignmentExpression(
+            "=",
+            types.memberExpression(
+              types.Identifier(name),
+              types.Identifier("hmrId"),
+              false
+            ),
+            types.stringLiteral(hash)
+          )
+        ),
+        types.expressionStatement(
+          types.assignmentExpression(
+            "=",
+            types.memberExpression(
+              types.Identifier(name),
+              types.Identifier("file"),
+              false
+            ),
+            types.stringLiteral(id)
+          )
         )
-      )
-    })
+      ]
+    }).flat()
   )
+
+  return hmrComponent
 }
 
 function isExportDeclaration({ type }) {
