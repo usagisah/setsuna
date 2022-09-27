@@ -1,0 +1,17 @@
+{
+  "name": "@setsuna/observable",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "@gxs/usagisah",
+  "exports": {
+    "require": "./dist/observable.cjs.js",
+    "import": "./dist/observable.es.js"
+  },
+  "main": "dist/observable.cjs.js",
+  "module": "dist/observable.es.js",
+  "dependencies": {
+    "@setsuna/share": "workspace:^0.0.1"
+  }
+}
