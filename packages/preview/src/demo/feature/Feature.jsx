@@ -1,14 +1,5 @@
-import { useState, Teleport, Await } from "@setsuna/setsuna"
+import { useState, Teleport, Await, defineElement } from "@setsuna/setsuna"
 
-export function Feature() {
-  return () => (
-    <div>
-      {/* <Fragment_ /> */}
-      {/* <Teleport_ /> */}
-      <Await_ />
-    </div>
-  )
-}
 
 // 文档碎片，审查元素，不会渲染出真实DOM节点
 function Fragment_() {
@@ -39,7 +30,7 @@ function Teleport_() {
 function Child({ num }) {
   return () => <div>我是 child 子组件 {num()} </div>
 }
-const LazyComponent = (num) => {
+const LazyComponent = num => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(<Child num={num} />)
@@ -51,18 +42,44 @@ function Await_() {
   const [num, setNum] = useState(0)
   const add = () => setNum(num() + 1)
 
-  return () => <div>
-    <Await fallback={<h1>loading</h1>}>
-      {LazyComponent(num)}
-    </Await>
+  return () => (
+    <div>
+      <Await fallback={<h1>loading</h1>}>{LazyComponent(num)}</Await>
 
-    {/* active 默认是 false, 也就是说只有第一回会执行，后边只要不手动指定返回 true，这个组件将永远不会执行 */}
-    {/* <Await fallback={<h1>loading</h1>} active={() => true}>
+      {/* active 默认是 false, 也就是说只有第一回会执行，后边只要不手动指定返回 true，这个组件将永远不会执行 */}
+      {/* <Await fallback={<h1>loading</h1>} active={() => true}>
       {LazyComponent(num)}
     </Await> */}
 
-    <p>{num()}</p>
-    <button onClick={add}>add</button>
-  </div>
+      <p>{num()}</p>
+      <button onClick={add}>add</button>
+    </div>
+  )
 }
 
+/* --------------  -------------- */
+function _TButton() {
+  return () => (
+    <button style={{ color: "red" }}>
+      <slot />11
+    </button>
+  )
+}
+const TButton = defineElement("t-button", _TButton).wrapper()
+
+
+
+/* --------------  -------------- */
+export function Feature() {
+  return () => (
+    <div>
+      {/* <Fragment_ /> */}
+      {/* <Teleport_ /> */}
+      {/* <Await_ /> */}
+
+      {/* <t-button>custom element</t-button> */}
+      {/* <TButton>custom element1</TButton> */}
+      123
+    </div>
+  )
+}

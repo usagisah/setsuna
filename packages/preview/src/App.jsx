@@ -1,4 +1,12 @@
-import { useState, useComputed, useRef, useChildren, useEffect, useUpdate, useMount } from "@setsuna/setsuna"
+import {
+  useState,
+  useComputed,
+  useRef,
+  useChildren,
+  useEffect,
+  useUpdate,
+  useMount
+} from "@setsuna/setsuna"
 import { ApiUseComputed } from "./demo/api/useComputed"
 import { ApiUseContext } from "./demo/api/useContext"
 import { ApiUseEffect } from "./demo/api/useEffect"
@@ -10,28 +18,28 @@ import { Feature } from "./demo/feature/Feature"
 import { Style } from "./demo/style/Style"
 import { System } from "./modules/System"
 
-
 // demo/api 是除了 useChildren 之外的 api
 function Api() {
-  return () => <>
-    {/* <ApiUseState /> */}
-    {/* <ApiUseComputed /> */}
-    {/* <ApiUseEffect /> */}
-    {/* <ApiUseRef /> */}
-    {/* <ApiUseUpdate /> */}
-    {/* <ApiUseMount /> */}
-    {/* <ApiUseContext /> */}
-  <System />
-</>
+  return () => (
+    <>
+      {/* <ApiUseState /> */}
+      {/* <ApiUseComputed /> */}
+      {/* <ApiUseEffect /> */}
+      {/* <ApiUseRef /> */}
+      {/* <ApiUseUpdate /> */}
+      {/* <ApiUseMount /> */}
+      {/* <ApiUseContext /> */}
+    </>
+  )
 }
 
-
-
 export function App() {
-  return () => <>
-    {/* <Api /> */}
-    {/* <Style_ /> */}
-    {/* <Feature /> */}
-    <System />
-  </>
+  return () => (
+    <>
+      {/* <Api /> */}
+      {/* <Style_ /> */}
+      <Feature />
+      {/* <System /> */}
+    </>
+  )
 }

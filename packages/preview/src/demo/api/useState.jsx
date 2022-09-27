@@ -10,8 +10,6 @@ export function ApiUseState() {
     }
   ])
 
-  debugger
-
   // 传入具体的值修改状态
   const add1 = () => setNum(num() + 1)
 
