@@ -1,10 +1,14 @@
 {
   "name": "@setsuna/setsuna",
   "version": "0.0.1",
-  "description": "",
-  "keywords": [],
+  "description": "A responsive, compact, progressive 'JavaScript' library for better development services",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "@setsuna/setsuna"
+  ],
   "license": "MIT",
-  "author": "@gxs/usagisah",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
       "require": "./dist/setsuna.cjs.js",
@@ -21,6 +25,9 @@
   },
   "main": "dist/setsuna.cjs.js",
   "module": "dist/setsuna.es.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@setsuna/observable": "workspace:^0.0.1",
     "@setsuna/share": "workspace:^0.0.1"

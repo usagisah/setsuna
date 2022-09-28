@@ -40,32 +40,34 @@ export function injectHMRInfo({ id, body }) {
   })
 
   body.unshift(
-    ...hmrComponent.map(name => {
-      return [
-        types.expressionStatement(
-          types.assignmentExpression(
-            "=",
-            types.memberExpression(
-              types.Identifier(name),
-              types.Identifier("hmrId"),
-              false
-            ),
-            types.stringLiteral(hash)
+    ...hmrComponent
+      .map(name => {
+        return [
+          types.expressionStatement(
+            types.assignmentExpression(
+              "=",
+              types.memberExpression(
+                types.Identifier(name),
+                types.Identifier("hmrId"),
+                false
+              ),
+              types.stringLiteral(hash)
+            )
+          ),
+          types.expressionStatement(
+            types.assignmentExpression(
+              "=",
+              types.memberExpression(
+                types.Identifier(name),
+                types.Identifier("file"),
+                false
+              ),
+              types.stringLiteral(id)
+            )
           )
-        ),
-        types.expressionStatement(
-          types.assignmentExpression(
-            "=",
-            types.memberExpression(
-              types.Identifier(name),
-              types.Identifier("file"),
-              false
-            ),
-            types.stringLiteral(id)
-          )
-        )
-      ]
-    }).flat()
+        ]
+      })
+      .flat()
   )
 
   return hmrComponent

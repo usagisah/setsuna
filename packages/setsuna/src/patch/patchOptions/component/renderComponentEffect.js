@@ -69,9 +69,7 @@ export function createRenderComponentEffect(options) {
       }
 
       VNode.el = nextSubTree?.el
-      VNode.anchor = nextSubTree
-        ? getNextSibling(nextSubTree)
-        : null
+      VNode.anchor = nextSubTree ? getNextSibling(nextSubTree) : null
       Object.assign(renderComponentEffect, {
         hydrate: false,
         hydrateNode: null

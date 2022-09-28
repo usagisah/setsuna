@@ -6,7 +6,7 @@ export function renderFragmentToString({
 }) {
   return [
     "<!-- Fragment -->",
-    children.map(VNode => nodeToString({ VNode, parentComponent })),
+    children.map(VNode => nodeToString({ VNode, parentComponent }))
     // "<!-- /Fragment -->"
   ]
 }

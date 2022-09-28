@@ -1,15 +1,21 @@
 {
   "name": "@setsuna/setsuna-use",
   "version": "0.0.1",
-  "description": "",
-  "keywords": [],
+  "description": "@Tool library of `@setsuna/setsuna`",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "setsuna use",
+    "setsuna-use",
+    "@setsuna/setsuna-use"
+  ],
   "license": "MIT",
-  "author": "",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "main": "dist/setsuna-use.cjs.js",
   "module": "dist/setsuna-use.es.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@setsuna/setsuna": "workspace:^0.0.1",
     "@setsuna/share": "workspace:^0.0.1"

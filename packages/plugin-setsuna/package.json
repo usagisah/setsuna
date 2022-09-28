@@ -1,12 +1,19 @@
 {
   "name": "@setsuna/plugin-setsuna",
   "version": "0.0.1",
-  "description": "",
-  "keywords": [],
+  "description": "Provide @setsuna/setsuna jsx support with HMR",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "@setsuna/plugin-setsuna"
+  ],
   "license": "MIT",
-  "author": "@gxs/usagisah",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "main": "dist/plugin-setsuna.cjs.js",
   "module": "dist/plugin-setsuna.es.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@babel/core": "^7.19.1",
     "@babel/plugin-transform-react-jsx": "^7.19.0",

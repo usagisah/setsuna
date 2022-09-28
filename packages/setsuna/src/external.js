@@ -13,4 +13,3 @@ export * from "./patch/patchOptions/element/ignoreElement"
 
 export * from "./patch/patchOptions/component/currentInstance"
 export * from "./handler/callWithErrorHandler"
-

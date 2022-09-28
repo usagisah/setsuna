@@ -41,10 +41,13 @@ export const omit = (source, blackList) =>
 
 export const noop = value => value
 
-export const noopError = error => { throw error }
+export const noopError = error => {
+  throw error
+}
 
-export const def = (target, key, options) => Object.defineProperty(target, key, {
-  enumerable: false,
-  configurable: false,
-  ...options
-})
+export const def = (target, key, options) =>
+  Object.defineProperty(target, key, {
+    enumerable: false,
+    configurable: false,
+    ...options
+  })

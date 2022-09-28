@@ -1,16 +1,24 @@
 {
   "name": "@setsuna/observable",
   "version": "0.0.1",
-  "description": "",
-  "keywords": [],
+  "description": "An implementation that conforms to the 'setsuna/observable' specification",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "@setsuna/observable"
+  ],
   "license": "MIT",
-  "author": "@gxs/usagisah",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     "require": "./dist/observable.cjs.js",
     "import": "./dist/observable.es.js"
   },
   "main": "dist/observable.cjs.js",
   "module": "dist/observable.es.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "@setsuna/share": "workspace:^0.0.1"
   }

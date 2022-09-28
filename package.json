@@ -7,6 +7,13 @@
     "build": "node scripts/build",
     "format": "prettier --w **/*.{js,json}"
   },
+  "dependencies": {
+    "@setsuna/observable": "workspace:^0.0.1",
+    "@setsuna/plugin-setsuna": "workspace:^0.0.1",
+    "@setsuna/setsuna": "workspace:^0.0.1",
+    "@setsuna/setsuna-use": "workspace:^0.0.1",
+    "@setsuna/share": "workspace:^0.0.1"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",
@@ -30,12 +37,5 @@
     "server": "^1.0.37",
     "typescript": "^4.8.3"
   },
-  "packageManager": "pnpm@7.11.0",
-  "dependencies": {
-    "@setsuna/observable": "workspace:^0.0.1",
-    "@setsuna/plugin-setsuna": "workspace:^0.0.1",
-    "@setsuna/setsuna": "workspace:^0.0.1",
-    "@setsuna/setsuna-use": "workspace:^0.0.1",
-    "@setsuna/share": "workspace:^0.0.1"
-  }
+  "packageManager": "pnpm@7.11.0"
 }

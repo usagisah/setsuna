@@ -12,7 +12,7 @@ export function hydrateAwait(context) {
   let { hydrateNode } = context
   hydrateNode = hydrateNode ?? container.firstChild
   if (!hydrateNode || hydrateNode.textContent.trim() !== "Await") {
-      error(
+    error(
       "hydrate Await",
       `节点不匹配，期望得到(<Await />)，却匹配到(${
         hydrateNode ? hydrateNode.tagName.toLowerCase() : "null"

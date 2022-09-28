@@ -24,8 +24,8 @@ export function getNextSibling(node) {
     ? node.type === Fragment
       ? node.anchor
       : node.el
-        ? getElementNextSibling(node.el)
-        : null
+      ? getElementNextSibling(node.el)
+      : null
     : null
 }
 

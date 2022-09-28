@@ -2,8 +2,13 @@
   "name": "@setsuna/share",
   "version": "0.0.1",
   "description": "@Tool functions shared internally by `@setsuna`",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "@setsuna/share"
+  ],
   "license": "MIT",
-  "author": "@gxs/usagisah",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
       "require": "./dist/share.cjs.js",
@@ -12,6 +17,9 @@
   },
   "main": "dist/share.cjs.js",
   "module": "dist/share.es.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@setsuna/observable": "workspace:^0.0.1"
   }

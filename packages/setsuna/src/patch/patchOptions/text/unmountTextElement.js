@@ -6,7 +6,7 @@ export function unmountTextElement(node) {
     // hmr. el is null/undefined
     return
   }
-  
+
   removeElement(el)
   node.el = node._e.el = null
 }

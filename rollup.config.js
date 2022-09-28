@@ -50,7 +50,10 @@ const createBuildConfig = () => {
             }),
             env === "prod" &&
               createConfig({
-                name: item === "main" ? `${name}.${format}.min` : `${item}.${format}.min`,
+                name:
+                  item === "main"
+                    ? `${name}.${format}.min`
+                    : `${item}.${format}.min`,
                 entity: item,
                 format,
                 ext: ".prod",

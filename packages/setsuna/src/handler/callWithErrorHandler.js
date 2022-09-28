@@ -15,6 +15,10 @@ export function callWithErrorHandler(VNode, fn, arg) {
       c = c.parentComponent
       errorTask.push(`\n<${c.FC.name}>`)
     }
-    error("flushing", e instanceof Error ? `${e.name}: ${e.stack}` : e, errorTask)
+    error(
+      "flushing",
+      e instanceof Error ? `${e.name}: ${e.stack}` : e,
+      errorTask
+    )
   }
 }
