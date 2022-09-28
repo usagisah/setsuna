@@ -72,7 +72,6 @@ export function setsunaPlugin() {
       })
 
       injectImport({ result })
-      debugger
       injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })
       return {
         code: result.code,

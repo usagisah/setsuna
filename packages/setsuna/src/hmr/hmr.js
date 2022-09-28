@@ -1,5 +1,6 @@
 import { patch } from "../patch/patch"
 import { _jsx } from "../jsx"
+import { isFunction } from "@setsuna/share"
 
 if (!globalThis?.window?.__SETSUNA_HMR_MAP__) {
   globalThis.window.__SETSUNA_HMR_MAP__ = {
@@ -18,8 +19,12 @@ export function registryRecord(id, renderEffect) {
   record.deps.add(renderEffect)
 }
 
-export function invokeReload(id, App) {
-  const appRecord = records.get(id)
+export function invokeReload(App) {
+  if (!isFunction(App)) {
+    return
+  }
+
+  const appRecord = records.get(App.hmrId)
   const deps = [...appRecord.deps]
   appRecord.deps.clear()
   deps.forEach(renderEffect => {

@@ -13,8 +13,8 @@ let rid = 0
 export function defineElement(name, fc) {
   let record = records.get(name)
   if (record) {
-    record.instance.reload(fc)
-    return { wrapper: noop }
+    record.instance?.reload(fc)
+    return { wrapper: () => record.element }
   }
 
   class TElement extends HTMLElement {
@@ -65,6 +65,9 @@ export function defineElement(name, fc) {
     }
 
     reload(fc) {
+      if (!this.connected) {
+        return
+      }
       unmount(this._VNode)
       this.shadow.innerHTML = ""
       this.fc = fc
@@ -182,9 +185,7 @@ export function defineElement(name, fc) {
   records.set(name, (record = { element: TElement }))
   customElements.define(name, TElement)
 
-  return {
-    wrapper: () => record.element
-  }
+  return { wrapper: () => record.element }
 }
 
 let templateMap = new Map()
