@@ -5,10 +5,13 @@ import { types } from "@babel/core"
 import { injectAutoReload } from "./injectAutoReload"
 
 export function setsunaPlugin() {
+  let isProd = false
   return {
     name: "vite:setsuna",
 
-    config() {
+    config(config, options) {
+      isProd = options.mode === "production"
+
       return {
         esbuild: {
           include: /\.ts$/
@@ -16,7 +19,7 @@ export function setsunaPlugin() {
       }
     },
 
-    transform(source, id) {
+    transform(source, id, ...props) {
       if (!id.endsWith("jsx")) return
 
       let hasRender = false
@@ -68,11 +71,15 @@ export function setsunaPlugin() {
               }
             }
           }
-        ]
+        ].filter(Boolean)
       })
 
       injectImport({ result })
-      injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })
+      
+      if (!isProd) {
+        injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })
+      }
+
       return {
         code: result.code,
         map: result.map
