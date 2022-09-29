@@ -1,3 +1,5 @@
+import "./hmr/hmr"
+
 export { _jsx, isVNode } from "./jsx"
 export * from "./render"
 export * from "./components/Await"

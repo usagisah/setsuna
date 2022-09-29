@@ -1,3 +1,5 @@
+import "./hmr/hmr"
+
 export * from "./patch/patch"
 export * from "./patch/patchChildren"
 export * from "./patch/patchProps"

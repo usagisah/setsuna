@@ -1,6 +1,7 @@
 import { patch } from "../patch/patch"
 import { _jsx } from "../jsx"
 import { isFunction } from "@setsuna/share"
+import { isWebComponent } from "../components/WebComponent"
 
 if (!globalThis?.window?.__SETSUNA_HMR_MAP__) {
   globalThis.window.__SETSUNA_HMR_MAP__ = {
@@ -20,7 +21,7 @@ export function registryRecord(id, renderEffect) {
 }
 
 export function invokeReload(App) {
-  if (!isFunction(App)) {
+  if (!isFunction(App) || App[isWebComponent]) {
     return
   }
 

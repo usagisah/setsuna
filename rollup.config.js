@@ -72,7 +72,7 @@ export default pkgConfig
 function createConfig({ name, entity, format, plugins = [] }) {
   return {
     input: resolvePath(`src/${entity}.js`),
-    external: ["@setsuna/setsuna"],
+    external: ["@setsuna/setsuna", "@babel/core"],
     plugins: [
       pluginJson(),
       pluginReplace({

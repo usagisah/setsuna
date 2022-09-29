@@ -10,6 +10,7 @@ const records = window.__SETSUNA_CUSTOM_ELEMENT ?? new Map()
 
 let sid = 0
 let rid = 0
+export const isWebComponent = Symbol("setsuna web component")
 export function defineElement(name, fc) {
   let record = records.get(name)
   if (record) {
