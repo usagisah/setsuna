@@ -76,7 +76,7 @@ export function hydrateProps(el, attrs) {
       _attr = reactive[0]
     }
     if (!isBoolean(attr) && attr != _attr) {
-      error("hydrating attrs", "属性值对不上", _attr, attr)
+      error("hydrating attrs", "属性值对不上", [_attr, " ", attr])
       setAttr(el, key, attr)
     }
     attrs[key] = patchedValue
@@ -91,7 +91,7 @@ export function hydrateProps(el, attrs) {
     if (isFunction(attr)) {
       setEvent(el, resolveEventName(key), attr)
     } else {
-      error("hydrating attrs", "属性值对不上", attr)
+      error("hydrating attrs", "属性值对不上", [attr])
       setAttr(el, key, attr)
     }
   })

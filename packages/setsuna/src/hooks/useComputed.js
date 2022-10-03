@@ -3,11 +3,14 @@ import { error } from "../handler/errorHandler"
 import { useEffect } from "./useEffect"
 import { createState } from "./useState"
 
+
+
+
 export function useComputed(subObs, options) {
   let getter, setter
   if (isPlainObject(options)) {
     getter = options.get ?? noop
-    setter = options.set ?? noop
+    setter = options.set
   } else {
     getter = options ?? noop
   }
@@ -24,3 +27,4 @@ export function useComputed(subObs, options) {
 
   return [state, setState, input$]
 }
+

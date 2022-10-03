@@ -18,8 +18,7 @@ export function hydrateElement(context) {
   if (!el) {
     error(
       "hydrate element",
-      `节点不匹配，期望得到(<${e.tag}/>)，却匹配到(${el})`,
-      []
+      `节点不匹配，期望得到(<${e.tag}/>)，却匹配到(${el})`
     )
     mountElement({ ...context, hydrate: false, anchor: null })
     return null
@@ -30,8 +29,7 @@ export function hydrateElement(context) {
       "hydrate element",
       `节点对不上，期望得到(<${
         e.tag
-      }/>)，却匹配到(<${el.tagName.toLowerCase()}/>)`,
-      []
+      }/>)，却匹配到(<${el.tagName.toLowerCase()}/>)`
     )
 
     const anchor = getElementNextSibling(el)
