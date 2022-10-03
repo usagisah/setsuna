@@ -4,15 +4,19 @@ import { useEffect } from "./useEffect"
 import { createState } from "./useState"
 
 
-
-
 export function useComputed(subObs, options) {
-  let getter, setter
+  let getter = () => {
+    return error("hook-useComputed", "getter 获取器未定义，获取失败")
+  }
+  let setter = () => {
+    return error("hook-useComputed", "setter 修改器未定义，禁止修改")
+  }
+
   if (isPlainObject(options)) {
-    getter = options.get ?? noop
-    setter = options.set
-  } else {
-    getter = options ?? noop
+    isFunction(options.get) && (getter = options.get)
+    isFunction(options.set) && (getter = options.set)
+  } else if (isFunction(options)) {
+    getter = options
   }
 
   const { state, input$ } = createState(getter(), { noParam: true })
