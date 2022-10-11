@@ -1,5 +1,5 @@
 import { getCurrentInstance } from "../patch/patchOptions/component/currentInstance"
-import { isFunction } from "@setsuna/share"
+import { def, isFunction } from "@setsuna/share"
 import { createState } from "./useState"
 
 function useProvide(key, value) {
@@ -24,7 +24,13 @@ function useContext(key, value) {
   }
 
   const ctxValue = activeMountContext.context[key]
-  return () => (ctxValue ? ctxValue.state() : value)
+  const ctxState = function () {
+    return ctxValue ? ctxValue.state() : value
+  }
+  def(ctxState, "input$", { get: () => ctxValue && ctxValue.input$ })
+  def(ctxState, "state", { get: () => undefined })
+
+  return ctxState
 }
 
 let id = 0
