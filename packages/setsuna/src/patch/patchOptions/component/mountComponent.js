@@ -64,8 +64,8 @@ export function mountComponent(context) {
   c.render = render
 
   observable.forEach(observable => bindReactiveUpdate(observable, node))
-  Object.values(componentContext).forEach(ctxValue =>
-    bindContextUpdate(ctxValue, node)
+  Reflect.ownKeys(componentContext).forEach(key =>
+    bindContextUpdate(componentContext[key], node)
   )
 
   return update()
