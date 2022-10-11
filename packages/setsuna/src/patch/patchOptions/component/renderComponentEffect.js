@@ -50,10 +50,6 @@ export function createRenderComponentEffect(options) {
       VNode.el = nextSubTree ? nextSubTree.el : null
     } else {
       let nextNode = hydrateNode
-      Object.assign(c, {
-        mounted: true,
-        unmounts: mounts.map(fn => callWithErrorHandler(VNode, fn))
-      })
 
       if (nextSubTree !== null) {
         nextNode = patch({
@@ -70,6 +66,10 @@ export function createRenderComponentEffect(options) {
 
       VNode.el = nextSubTree?.el
       VNode.anchor = nextSubTree ? getNextSibling(nextSubTree) : null
+      Object.assign(c, {
+        mounted: true,
+        unmounts: mounts.map(fn => callWithErrorHandler(VNode, fn))
+      })
       Object.assign(renderComponentEffect, {
         hydrate: false,
         hydrateNode: null
