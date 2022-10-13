@@ -2,7 +2,7 @@ import { getCurrentInstance } from "../patch/patchOptions/component/currentInsta
 import { def, isFunction } from "@setsuna/share"
 import { createState } from "./useState"
 
-function useProvide(key, value) {
+export function useProvide(key = `$$context(${key ?? id++})`, value) {
   const activeMountContext = getCurrentInstance()
   if (!activeMountContext) {
     throw "useProvide 只能在组件内部初始化时、顶层被调用"
@@ -17,7 +17,7 @@ function useProvide(key, value) {
   return [state, setState, input$]
 }
 
-function useContext(key, value) {
+export function useContext(key, value) {
   const activeMountContext = getCurrentInstance()
   if (!activeMountContext) {
     throw "useContext 只能在组件内部初始化时、顶层被调用"
