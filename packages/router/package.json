@@ -1,0 +1,27 @@
+{
+  "name": "@setsuna/router",
+  "version": "0.0.1",
+  "description": "Router serving 'setsuna'",
+  "keywords": [
+    "setsuna",
+    "@setsuna",
+    "@setsuna/setsuna"
+  ],
+  "license": "MIT",
+  "author": "@gxs/usagisah <email@1286791152@qq.com>",
+  "exports": {
+    ".": {
+      "require": "./dist/router.cjs.js",
+      "import": "./dist/router.es.js"
+    }
+  },
+  "main": "dist/router.cjs.js",
+  "module": "dist/router.es.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@setsuna/observable": "workspace:^0.0.1",
+    "@setsuna/share": "workspace:^0.0.1"
+  }
+}
