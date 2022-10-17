@@ -28,32 +28,34 @@ function createRouter(type, options, createHistory) {
     options
   }
 
+  debugger
   createRouterMatcher(router)
   createHistory(router)
-
   callEffectNavigate(router, parseHrefToPath(router), record => {
-    router.history.setLocation(record, false)
+    router.his.setLocation(record, true)
   })
 
   return router
 }
 
 function parseHrefToPath(router) {
-  const { type, history } = router
-  const base = history.state.base + "/"
+  const { type, his } = router
+  const base = his.state.base
   const { hash, pathname, search } = location
   let path = ""
 
   if (type === "hash") {
-    path = hash.includes(base)
-      ? hash.slice(hash.indexOf(base) + base.length)
-      : ""
+    let _hash = hash.slice(1)
+    if (!_hash.startsWith("/")) _hash = "/" + _hash
+    path = _hash.startsWith(base)
+      ? _hash.slice(base.length)
+      : _hash
   } else {
-    const _pathname = pathname.includes(base)
-      ? pathname.slice(pathname.indexOf(base) + base.length)
-      : ""
+    const _pathname = pathname.startsWith(base)
+      ? pathname.slice(base.length)
+      : pathname
     path = _pathname + search + hash
   }
 
-  return `/${path}`
+  return path.startsWith("/") ? path : `/${path}`
 }

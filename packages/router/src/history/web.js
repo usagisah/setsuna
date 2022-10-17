@@ -1,5 +1,9 @@
 import { EMPTY_RECORD } from "../createRouteRecord"
-import { normalizeSlash, resolveRoutePath } from "../resolveRoutePath"
+import {
+  excludeQuery,
+  normalizeSlash,
+  resolveRoutePath
+} from "../resolveRoutePath"
 
 export function createWebHistory(router) {
   const state = {
@@ -38,7 +42,7 @@ export function createWebHistory(router) {
   }
 
   function back() {
-    history.go(1)
+    history.go(-1)
   }
 
   function forward() {
@@ -46,12 +50,11 @@ export function createWebHistory(router) {
   }
 
   function setLocation(record, replace) {
+    const href = buildLocationHref(router, record.path)
+    const hisState = buildHistoryState(record)
+    record.href = href
     state.location = record
-    history[replace ? "replace" : "pushState"](
-      buildHistoryState(record),
-      "",
-      buildLocationHref(router, record.path)
-    )
+    history[replace ? "replaceState" : "pushState"](hisState, "", href)
   }
 
   function onPopstateEvent(e) {
@@ -64,7 +67,7 @@ export function createWebHistory(router) {
 
   window.addEventListener("popstate", onPopstateEvent)
 
-  router.history = {
+  router.his = {
     state,
     navigator: {
       push,
@@ -78,19 +81,17 @@ export function createWebHistory(router) {
   }
 }
 
-function normalizeBase(router) {
-  let base = String(router.base || "")
+function normalizeBase(basePath) {
+  let base = basePath ? String(basePath) : ""
+  base = base.replace(/^\w+:\/+/, "").replace(/\/?#/, "")
+  base = excludeQuery(base)
+  base = normalizeSlash(base)
 
-  // 去协议，例如 http(s):// file:///
-  base = base.replace(/^\w+:\/+/, "")
-
-  // 去 query 参数
-  const anchor = base.indexOf("?")
-  if (anchor > -1) {
-    base = base.slice(0, anchor)
+  if (base === "/") {
+    base = ""
   }
 
-  return normalizeSlash(base)
+  return base
 }
 
 function normalizeLocation(router) {
@@ -105,7 +106,7 @@ function normalizeLocation(router) {
   return Object.assign(location, {
     state: resolve(matchPath),
     matchPath,
-    matchs: resolveRecordMatcher()
+    matchs: resolveRecordMatcher(matchPath)
   })
 }
 
@@ -114,23 +115,32 @@ function buildHistoryState(record) {
   return { setsuna_router: { fullPath, path, params, query } }
 }
 
-function buildLocationHref(router, path) {
-  const { type, history } = router
-  const { base } = history.state
+function buildLocationHref(router, path) {debugger
+  const { type, his } = router
+  const { base } = his.state
   const { hash, pathname, search } = location
 
   if (type === "hash") {
-    const hashPath = hash[1] === "/" ? hash : `#/${hash.slice(1)}`
-    const basePath = hashPath.endsWith(base) ? "" : base
-    path = pathname + search + hashPath + removelastSlash(basePath + path)
+    const hashPath = hash[1] === "/" ? hash.slice(1) : `/${hash.slice(1)}`
+    const basePath = hashPath.startsWith(base) ? "" : base
+    if (hashPath.endsWith(path)) {
+      path = ""
+    }
+    path = pathname + search + "/#" + basePath + hashPath + path
   } else {
-    const fullPath = pathname.endsWith(base) ? pathname : pathname + base
-    path = removelastSlash(fullPath + path) + search
+    const fullPath = pathname.startsWith(base) ? pathname : base + pathname
+    if (fullPath.endsWith(path)) {
+      path = ""
+    }
+    path = removeSlash(fullPath) + path + search
   }
 
   return path
 }
 
-function removelastSlash(path) {
-  return path.endsWith("/") ? path.slice(0, -1) : path
+export function removeSlash(path) {
+  if (path.endsWith("/")) {
+    path = path.slice(0, -1)
+  }
+  return path
 }

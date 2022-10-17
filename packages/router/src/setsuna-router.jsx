@@ -35,8 +35,10 @@ export function useRouterView() {}
 
 export function RouterView() {
   const routerViewContext = useContext(INJECT_ROUTE_VIEW)
-  const [component, setComponent] = useState(() => routerViewContext().value.options.component)
-  console.log( routerViewContext().value )
+  const [component, setComponent] = useState(
+    () => routerViewContext().value.options.component
+  )
+  console.log(routerViewContext().value)
   console.log(routerViewContext().next())
   // const [_, setProvide] = useProvide(
   //   INJECT_ROUTE_VIEW,
@@ -58,8 +60,10 @@ export function RouterView() {
 export function createBrowserRouter(options) {
   const router$ = new Observable()
   const { afterEach, ...routeOptions } = options
-  routeOptions.afterEach = (to, from) => {
-    router$.next({ to, from })
+  routeOptions.afterEnter = (to, from) => {
+    // router$.next({ to, from })
+    console.log( to )
+    console.log( from )
   }
 
   const appRouter = _createBrowserRouter(routeOptions)
@@ -81,7 +85,6 @@ export function createBrowserRouter(options) {
 // export { useRoute, useRouter } from "./router"
 
 export const AppRouter = createBrowserRouter({
-  base: "/user",
   routes: [
     {
       path: "/",

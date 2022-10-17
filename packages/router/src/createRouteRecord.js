@@ -1,4 +1,4 @@
-import { resolveRoutePath } from "./resolveRoutePath"
+import { normalizeSlash, resolveRoutePath } from "./resolveRoutePath"
 
 export const EMPTY_RECORD = {
   fullPath: "",
@@ -11,17 +11,17 @@ export const EMPTY_RECORD = {
 }
 
 export function createRouteRecord(path, router) {
-  const { matcher, history } = router
+  const { matcher, his } = router
   const matchPath = "^" + resolveRoutePath(path)[0] + "$"
   const state = matcher.resolve(matchPath)
   return state
-    ? transformStateToRecord(state, history)
+    ? transformStateToRecord(state, his, path)
     : EMPTY_RECORD
 }
 
-function transformStateToRecord(state, history) {
+function transformStateToRecord(state, his, path) {
   const { search, pathname } = location
-  const { path, matchPath, match, paramKeys } = state
+  const { matchPath, match, paramKeys } = state
 
   const query = {}
   const searchExp = search.slice(1).split("&")
@@ -46,12 +46,12 @@ function transformStateToRecord(state, history) {
   })
 
   return {
-    fullPath: history.state.base + path,
+    fullPath: normalizeSlash(his.state.base + path),
     path,
     params,
     query,
     matchPath,
     matchs: [],
-    matcher: state,
+    state
   }
 }

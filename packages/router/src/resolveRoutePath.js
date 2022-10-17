@@ -10,9 +10,15 @@ export function normalizeSlash(path) {
   return path
 }
 
+export function excludeQuery(path) {
+  const anchor = path.indexOf("?")
+  return anchor > -1 ? path.slice(0, anchor) : path
+}
+
 export function resolveRoutePath(path) {
   const paramKeys = []
   path = String(path)
+  path = excludeQuery(path)
   path = normalizeSlash(path)
 
   if (path.includes("/:")) {

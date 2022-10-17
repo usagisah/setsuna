@@ -22,7 +22,7 @@ export function createRouterMatcher(router) {
       let curState = state
       while (curState) {
         matchs.push(curState)
-        curState = state.parent
+        curState = curState.parent
       }
 
       return matchs.reverse()
