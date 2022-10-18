@@ -2,7 +2,7 @@ import { Home } from "../page/Home"
 import { User } from "../page/User"
 import { createBrowserRouter as _createBrowserRouter } from "./router"
 import { Observable } from "@setsuna/observable"
-import { useContext, useProvide, useState } from "@setsuna/setsuna"
+import { useContext, useEffect, useProvide, useState } from "@setsuna/setsuna"
 import { Login } from "../page/Login"
 
 // const router = createBrowserRouter({
@@ -30,30 +30,23 @@ import { Login } from "../page/Login"
 */
 
 const INJECT_ROUTE_VIEW = Symbol("setsuna route view")
+const INJECT_ROUTE_ORDER = Symbol("setsuna route order")
 
 export function useRouterView() {}
 
 export function RouterView() {
-  const routerViewContext = useContext(INJECT_ROUTE_VIEW)
-  const [component, setComponent] = useState(
-    () => routerViewContext().value.options.component
-  )
-  console.log(routerViewContext().value)
-  console.log(routerViewContext().next())
-  // const [_, setProvide] = useProvide(
-  //   INJECT_ROUTE_VIEW,
-  //   routerViewContext.nextRoute()
-  // )
+  const views = useContext(INJECT_ROUTE_VIEW)
+  const order = useContext(INJECT_ROUTE_ORDER)
+  const [_, setOrder] = useProvide(INJECT_ROUTE_ORDER, order() + 1)
+  const [component, setComponent] = useState(() => {
+    return views()[order()].options.component
+  })
 
-  // useEffect([routerViewContext], route => {
-  //   if (!route) {
-  //     return
-  //   }
-
-  //   setComponent(route.options.component)
-  //   // setProvide(route.nextRoute())
-  // })
-
+  useEffect([views], () => {
+    setOrder(order() + 1)
+    setComponent(views()[order()].options.component)
+  })
+  
   return () => component()
 }
 
@@ -61,23 +54,14 @@ export function createBrowserRouter(options) {
   const router$ = new Observable()
   const { afterEach, ...routeOptions } = options
   routeOptions.afterEnter = (to, from) => {
-    // router$.next({ to, from })
-    console.log( to )
-    console.log( from )
+    router$.next({ to, from })
   }
 
-  const appRouter = _createBrowserRouter(routeOptions)
-
+  const { matchs } = _createBrowserRouter(routeOptions).his.state.location
   return function RouterProvide() {
-    const [_, setProvide] = useProvide(
-      INJECT_ROUTE_VIEW,
-      appRouter.getCurrentRoute()
-    )
-
-    router$.subscribe(({ to }) => {
-      setProvide(to)
-    })
-
+    const [views, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
+    const [order, setOrder] = useProvide(INJECT_ROUTE_ORDER, 0)
+    router$.subscribe(({ to }) => setViews(to))
     return () => <children />
   }
 }
@@ -85,20 +69,15 @@ export function createBrowserRouter(options) {
 // export { useRoute, useRouter } from "./router"
 
 export const AppRouter = createBrowserRouter({
+  base: "/prefix",
   routes: [
     {
       path: "/",
       component: <Home />
     },
     {
-      path: "/user",
-      component: <User />,
-      children: [
-        {
-          path: "/u",
-          component: <Login />
-        }
-      ]
+      path: "/user/:id",
+      component: <User />
     }
   ]
 })

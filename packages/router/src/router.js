@@ -3,7 +3,7 @@ import { createRouterMatcher } from "./createRouterMatcher"
 import { callEffectNavigate } from "./effect/callEffectNavigate"
 import { createWebHistory } from "./history/web"
 import { createMemoryHistory } from "./history/memory"
-import { parseL, parseLocationocationparseLocation } from "./parseLocation"
+import { parseLocation } from "./parseLocation"
 
 export function createBrowserRouter(options) {
   return createRouter("history", options, createWebHistory)

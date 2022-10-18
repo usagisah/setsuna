@@ -1,8 +1,7 @@
 import { isPlainObject, isString } from "@setsuna/share"
-import { normalizeSlash, resolveRoutePath } from "../parseRoutePath"
+import { normalizeSlash } from "../parseRoutePath"
 import { excludeQuery, parseLocation } from "../parseLocation"
 import { createRouteRecord, EMPTY_RECORD } from "../createRouteRecord"
-import { stringify } from "querystring"
 
 export function createWebHistory(router) {
   const state = {
@@ -10,30 +9,31 @@ export function createWebHistory(router) {
     location: normalizeLocation(router)
   }
 
-  function push(to, options = {}) {
-    const matchPath = normalizeRoutePath(to)
-    if (!options.force && matchPath === state.state.matchPath) {
+  function navigate(to, replace) {
+    const options = normalizeNavState(to)
+    if (!isString(options.path)) {
+      return console.error("push error: path is not a string")
+    }
+
+    if (!options.force && state.state.loc.path === options.path) {
       return
     }
 
-    // 基于当前
-    const record = createRouteRecord(to)
-    callEffectNavigate(router, record, (record, matcher) => {
-      setLocation(record, matcher, "push")
-    })
+    callEffectNavigate(
+      parseLocation(normalizeNavState(options), router),
+      router,
+      record => {
+        router.his.setLocation(record, replace)
+      }
+    )
   }
 
-  function replace(to, options) {
-    const matchPath = normalizeRoutePath(to)
-    if (!options.force && matchPath === state.state.matchPath) {
-      return
-    }
+  function push(to) {
+    navigate(to, false)
+  }
 
-    // 基于当前
-    const record = createRouteRecord(to)
-    callEffectNavigate(router, (record, matcher) => {
-      setLocation(record, matcher, "replace")
-    })
+  function replace(to) {
+    navigate(to, true)
   }
 
   function go(delta) {
@@ -52,23 +52,22 @@ export function createWebHistory(router) {
     const { base, path, pathname, search, hash, query } = record.loc
     let href, fullPath
     if (router.type === "hash") {
-      href = base + pathname + search + hash + stringify(query)
+      href = base + pathname + search + "/#" + hash + queryString(query)
       fullPath = base + pathname + search + hash
     } else {
-      href = base + path + stringify(query) + "/#/" + hash
-      fullPath = base + path + "/#/" + hash
+      href = base + path + queryString(query) + hash
+      fullPath = base + path + hash
     }
 
-    history[replace ? "replaceState" : "pushState"](
-      (record.state = fullPath),
-      "",
-      href
-    )
+    record.state.fullPath = fullPath
+    history[replace ? "replaceState" : "pushState"](record.state, "", href)
     state.location = record
   }
 
-  function onPopstateEvent(e) {
-    console.log(e)
+  function onPopstateEvent() {
+    callEffectNavigate(parseLocation(null, router), router, record => {
+      router.his.setLocation(record, replace)
+    })
   }
 
   function destory() {
@@ -95,12 +94,14 @@ export function normalizeNavState(state) {
   if (isString(state)) {
     return {
       path: state,
-      query: {}
+      query: {},
+      force: false
     }
   } else {
     return {
-      path: state.path || "",
-      query: isPlainObject(state, query) || {}
+      path: state.path,
+      query: isPlainObject(state, query) || {},
+      force: !!state.force
     }
   }
 }
@@ -117,7 +118,7 @@ function normalizeBase(basePath) {
 
   return {
     value: base,
-    reg: new RegExp(`(^${base}$)|(^${base}/\w+)`)
+    reg: new RegExp(`(^${base}$)|(^${base}/[\\s\\S]+)`)
   }
 }
 
@@ -128,4 +129,21 @@ function normalizeLocation(router) {
   }
 
   return createRouteRecord(parseLocation(state.setsuna_router), router)
+}
+
+function queryString(query) {
+  let tokens = []
+  Object.entries(query).forEach(([key, value]) => {
+    let exp = ""
+    if (key) {
+      exp = key
+    }
+    if (value) {
+      exp += "=" + value
+    }
+    if (exp.length > 0) {
+      tokens.push(exp)
+    }
+  })
+  return (tokens.length > 0 ? "?" : "") + tokens.join("&")
 }

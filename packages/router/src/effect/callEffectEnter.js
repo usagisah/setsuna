@@ -14,7 +14,7 @@ export function callEffectEnter(pathTmpl, router) {
   }
 
   if (res) {
-    return to
+    return record
   }
 
   throw null

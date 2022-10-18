@@ -17,7 +17,7 @@ export function callEffectNavigate(pathTmpl, router, callback) {
     // callEffectLoader(record, matcher)
     // callEffectScroll(router)
     callback(record)
-    callEffectAfter(router, from)
+    callEffectAfter(router, fromRecord)
   } catch (err) {
     if (err === null) return
     console.error("router error:", err)

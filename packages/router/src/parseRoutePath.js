@@ -17,7 +17,7 @@ export function parseRoutePath(path) {
 
   if (path.includes("/:")) {
     let str = ""
-    path.split("/").forEach(token => {
+    path.slice(1).split("/").forEach(token => {
       if (token.startsWith(":")) {
         str += "/([^/]+)"
         paramKeys.push(token.slice(1))

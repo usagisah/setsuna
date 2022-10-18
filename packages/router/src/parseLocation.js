@@ -4,7 +4,7 @@ export function parseLocation(pathExp, router) {
   const { type, his, matcher } = router
   const { base } = his.state
   const loc = {
-    base,
+    base: base.value,
     path: "",
     pathname: "",
     search: "",
@@ -52,14 +52,16 @@ export function parseLocation(pathExp, router) {
     _path = _path.slice(base.value.length)
   }
 
-  const [matchPath, paramKeys] = parseRoutePath(_path)
-  const matchState = matcher.resolve(matchPath)
-  const res = _path.match(matchState.match)
-  if (res) {
-    loc.params = paramKeys.reduce((params, key, index) => {
-      params[key] = decodeURIComponent(res[index + 1])
-      return params
-    }, {})
+  const [matchPath] = parseRoutePath(_path)
+  const matchState = matcher.resolve(`^${matchPath}$`)
+  if (matchState) {
+    const res = _path.match(matchState.match)
+    if (res) {
+      loc.params = matchState.paramKeys.reduce((params, key, index) => {
+        params[key] = decodeURIComponent(res[index + 1])
+        return params
+      }, {})
+    }
   }
 
   loc.matchPath = matchPath

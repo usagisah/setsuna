@@ -1,4 +1,4 @@
-import { resolveRoutePath } from "./parseRoutePath"
+import { parseRoutePath } from "./parseRoutePath"
 import { isArray, isPlainObject, isString } from "@setsuna/share"
 
 export function createRouterMatcher(router) {
@@ -11,13 +11,25 @@ export function createRouterMatcher(router) {
   routes.forEach(route => createRouteMatcher({ route, deep: 0, matcher }))
 
   return (router.matcher = {
-    resolve: key => matcher.get(key),
+    resolve: key => {
+      let res = matcher.get(key)
+      if (res) {
+        return res
+      }
+
+      matcher.forEach(s => {
+        if (!res && s.match.test(key.slice(1, -1))) {
+          res = s
+        }
+      })
+      return res
+    },
     resolveRecordMatcher: record => {
-      if (!record) {
+      if (!record.matchState) {
         return []
       }
 
-      const state = matcher.get(record.matchPath)
+      const state = matcher.get(record.matchState.matchPath)
       const matchs = []
       let curState = state
       while (curState) {
@@ -40,7 +52,7 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     return
   }
 
-  const [_path, paramKeys] = resolveRoutePath(path)
+  const [_path, paramKeys] = parseRoutePath(path)
   const _reg = deep === 0 ? _path : `${parent.matchPath}${_path}`
   const _route = {
     matchPath: _reg,
@@ -48,7 +60,7 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     loader,
     paramKeys,
     redirect,
-    matchRedirect: redirect && resolveRoutePath(redirect).matchPath,
+    matchRedirect: redirect && parseRoutePath(redirect).matchPath,
     loaderData: void 0,
     parent,
     children: [],

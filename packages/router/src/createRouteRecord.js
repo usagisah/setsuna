@@ -12,16 +12,16 @@ export const EMPTY_RECORD = {
 
 export function createRouteRecord(pathTmpl) {
   const { path, query, params, matchState } = pathTmpl
-  const { redirect } = matchState
   return {
     loc: pathTmpl,
     matchState,
     state: {
       fullPath: "",
       path,
-      redirect,
+      redirect: matchState && matchState.redirect,
       query,
       params
-    }
+    },
+    matchs: []
   }
 }
