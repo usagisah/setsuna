@@ -3,13 +3,14 @@ import { callEffectLoader } from "./callEffectLoader"
 import { callEffectScroll } from "./callEffectScroll"
 import { callEffectAfter } from "./callEffectAfter"
 
-export function callEffectNavigate(router, toPath, callback) {
+
+export function callEffectNavigate(pathTmpl, router, callback) {
   const { matcher, his } = router
   const { resolveRecordMatcher } = matcher
 
   try {
-    const record = callEffectEnter(toPath, router)
-    const from = his.state.location
+    const record = callEffectEnter(pathTmpl, router)
+    const fromRecord = his.state.location
     const matchs = resolveRecordMatcher(record)
     record.matchs = matchs
 

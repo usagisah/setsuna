@@ -1,9 +1,8 @@
-import { EMPTY_RECORD } from "../createRouteRecord"
-import {
-  excludeQuery,
-  normalizeSlash,
-  resolveRoutePath
-} from "../resolveRoutePath"
+import { isPlainObject, isString } from "@setsuna/share"
+import { normalizeSlash, resolveRoutePath } from "../parseRoutePath"
+import { excludeQuery, parseLocation } from "../parseLocation"
+import { createRouteRecord, EMPTY_RECORD } from "../createRouteRecord"
+import { stringify } from "querystring"
 
 export function createWebHistory(router) {
   const state = {
@@ -50,11 +49,22 @@ export function createWebHistory(router) {
   }
 
   function setLocation(record, replace) {
-    const href = buildLocationHref(router, record.path)
-    const hisState = buildHistoryState(record)
-    record.href = href
+    const { base, path, pathname, search, hash, query } = record.loc
+    let href, fullPath
+    if (router.type === "hash") {
+      href = base + pathname + search + hash + stringify(query)
+      fullPath = base + pathname + search + hash
+    } else {
+      href = base + path + stringify(query) + "/#/" + hash
+      fullPath = base + path + "/#/" + hash
+    }
+
+    history[replace ? "replaceState" : "pushState"](
+      (record.state = fullPath),
+      "",
+      href
+    )
     state.location = record
-    history[replace ? "replaceState" : "pushState"](hisState, "", href)
   }
 
   function onPopstateEvent(e) {
@@ -81,6 +91,20 @@ export function createWebHistory(router) {
   }
 }
 
+export function normalizeNavState(state) {
+  if (isString(state)) {
+    return {
+      path: state,
+      query: {}
+    }
+  } else {
+    return {
+      path: state.path || "",
+      query: isPlainObject(state, query) || {}
+    }
+  }
+}
+
 function normalizeBase(basePath) {
   let base = basePath ? String(basePath) : ""
   base = base.replace(/^\w+:\/+/, "").replace(/\/?#/, "")
@@ -91,56 +115,17 @@ function normalizeBase(basePath) {
     base = ""
   }
 
-  return base
+  return {
+    value: base,
+    reg: new RegExp(`(^${base}$)|(^${base}/\w+)`)
+  }
 }
 
 function normalizeLocation(router) {
-  const { resolve, resolveRecordMatcher } = router.matcher
   const { state } = history
   if (!state || !state.setsuna_router) {
     return EMPTY_RECORD
   }
 
-  const location = state.setsuna_router
-  const matchPath = "^" + resolveRoutePath(location.path)[0] + "$"
-  return Object.assign(location, {
-    state: resolve(matchPath),
-    matchPath,
-    matchs: resolveRecordMatcher(matchPath)
-  })
-}
-
-function buildHistoryState(record) {
-  const { fullPath, path, params, query } = record
-  return { setsuna_router: { fullPath, path, params, query } }
-}
-
-function buildLocationHref(router, path) {debugger
-  const { type, his } = router
-  const { base } = his.state
-  const { hash, pathname, search } = location
-
-  if (type === "hash") {
-    const hashPath = hash[1] === "/" ? hash.slice(1) : `/${hash.slice(1)}`
-    const basePath = hashPath.startsWith(base) ? "" : base
-    if (hashPath.endsWith(path)) {
-      path = ""
-    }
-    path = pathname + search + "/#" + basePath + hashPath + path
-  } else {
-    const fullPath = pathname.startsWith(base) ? pathname : base + pathname
-    if (fullPath.endsWith(path)) {
-      path = ""
-    }
-    path = removeSlash(fullPath) + path + search
-  }
-
-  return path
-}
-
-export function removeSlash(path) {
-  if (path.endsWith("/")) {
-    path = path.slice(0, -1)
-  }
-  return path
+  return createRouteRecord(parseLocation(state.setsuna_router), router)
 }

@@ -1,4 +1,4 @@
-import { resolveRoutePath } from "./resolveRoutePath"
+import { resolveRoutePath } from "./parseRoutePath"
 import { isArray, isPlainObject, isString } from "@setsuna/share"
 
 export function createRouterMatcher(router) {

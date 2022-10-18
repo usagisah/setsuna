@@ -1,14 +1,16 @@
 import { createRouteRecord } from "../createRouteRecord"
 import { isString } from "@setsuna/share"
+import { parseLocation } from "../parseLocation"
+import { normalizeNavState } from "../history/web"
 
-export function callEffectEnter(toPath, router) {
+export function callEffectEnter(pathTmpl, router) {
   const { beforeEnter, his } = router
-  const to = createRouteRecord(toPath, router)
-  const from = his.state.location
-  const res = beforeEnter(to, from)
+  const record = createRouteRecord(pathTmpl, router)
+  const fromRecord = his.state.location
+  const res = beforeEnter(record.state, fromRecord.state)
 
   if (isString(res)) {
-    return callEffectEnter(res, router)
+    return callEffectEnter(parseLocation(normalizeNavState(res)), router)
   }
 
   if (res) {

@@ -1,1 +1,3 @@
-export function createHashHistory() {}
+export function createHashHistory(options) {
+  
+}
