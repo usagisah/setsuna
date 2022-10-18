@@ -18,6 +18,7 @@ export function createMemoryRouter(options) {
 }
 
 const DEFAULT_GUARD = () => true
+let global_router = null
 
 function createRouter(type, options, createHistory) {
   const { beforeEnter, afterEnter } = options
@@ -34,5 +35,13 @@ function createRouter(type, options, createHistory) {
     router.his.setLocation(record, true)
   })
 
-  return router
+  return (global_router = router)
+}
+
+export function useRouter() {
+  return global_router
+}
+
+export function useNavigate() {
+  return global_router.his.navigator
 }

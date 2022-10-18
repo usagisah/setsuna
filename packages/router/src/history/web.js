@@ -2,6 +2,7 @@ import { isPlainObject, isString } from "@setsuna/share"
 import { normalizeSlash } from "../parseRoutePath"
 import { excludeQuery, parseLocation } from "../parseLocation"
 import { createRouteRecord, EMPTY_RECORD } from "../createRouteRecord"
+import { callEffectNavigate } from "../effect/callEffectNavigate"
 
 export function createWebHistory(router) {
   const state = {
@@ -15,7 +16,7 @@ export function createWebHistory(router) {
       return console.error("push error: path is not a string")
     }
 
-    if (!options.force && state.state.loc.path === options.path) {
+    if (!options.force && state.location.loc.path === options.path) {
       return
     }
 
@@ -100,7 +101,7 @@ export function normalizeNavState(state) {
   } else {
     return {
       path: state.path,
-      query: isPlainObject(state, query) || {},
+      query: isPlainObject(state.query) || {},
       force: !!state.force
     }
   }

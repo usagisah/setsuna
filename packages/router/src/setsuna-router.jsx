@@ -1,8 +1,17 @@
 import { Home } from "../page/Home"
 import { User } from "../page/User"
-import { createBrowserRouter as _createBrowserRouter } from "./router"
+import {
+  createBrowserRouter as _createBrowserRouter,
+  useRouter
+} from "./router"
 import { Observable } from "@setsuna/observable"
-import { useContext, useEffect, useProvide, useState } from "@setsuna/setsuna"
+import {
+  useComputed,
+  useContext,
+  useEffect,
+  useProvide,
+  useState
+} from "@setsuna/setsuna"
 import { Login } from "../page/Login"
 
 // const router = createBrowserRouter({
@@ -34,19 +43,28 @@ const INJECT_ROUTE_ORDER = Symbol("setsuna route order")
 
 export function useRouterView() {}
 
+export { useRouter, useNavigate } from "./router"
+
+export function useRoute() {
+  const order = useContext(INJECT_ROUTE_ORDER)
+  return useComputed([order], () => useRouter().his.state.location.state)
+}
+
 export function RouterView() {
   const views = useContext(INJECT_ROUTE_VIEW)
   const order = useContext(INJECT_ROUTE_ORDER)
   const [_, setOrder] = useProvide(INJECT_ROUTE_ORDER, order() + 1)
   const [component, setComponent] = useState(() => {
-    return views()[order()].options.component
+    const route = views()[order()]
+    return route ? route.options.component : null
   })
 
   useEffect([views], () => {
+    const route = views()[order()]
+    setComponent(route ? route.options.component : null)
     setOrder(order() + 1)
-    setComponent(views()[order()].options.component)
   })
-  
+
   return () => component()
 }
 
@@ -61,22 +79,19 @@ export function createBrowserRouter(options) {
   return function RouterProvide() {
     const [views, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
     const [order, setOrder] = useProvide(INJECT_ROUTE_ORDER, 0)
-    router$.subscribe(({ to }) => setViews(to))
+    router$.subscribe(({ to }) => setViews(to.matchs))
     return () => <children />
   }
 }
 
-// export { useRoute, useRouter } from "./router"
-
 export const AppRouter = createBrowserRouter({
-  base: "/prefix",
   routes: [
     {
       path: "/",
       component: <Home />
     },
     {
-      path: "/user/:id",
+      path: "/user",
       component: <User />
     }
   ]
