@@ -7,7 +7,7 @@ import { callEffectNavigate } from "../effect/callEffectNavigate"
 export function createWebHistory(router) {
   const state = {
     base: normalizeBase(router.options.base),
-    location: normalizeLocation(router)
+    location: null
   }
 
   function navigate(to, replace) {
@@ -61,7 +61,11 @@ export function createWebHistory(router) {
     }
 
     record.state.fullPath = fullPath
-    history[replace ? "replaceState" : "pushState"](record.state, "", href)
+    history[replace ? "replaceState" : "pushState"](
+      { setsuna_router: record.state },
+      "",
+      href
+    )
     state.location = record
   }
 
@@ -89,6 +93,7 @@ export function createWebHistory(router) {
     setLocation,
     destory
   }
+  state.location = normalizeLocation(router)
 }
 
 export function normalizeNavState(state) {
@@ -129,7 +134,9 @@ function normalizeLocation(router) {
     return EMPTY_RECORD
   }
 
-  return createRouteRecord(parseLocation(state.setsuna_router), router)
+  const record = createRouteRecord(parseLocation(state.setsuna_router, router), router)
+  record.state.position = record.loc.position
+  return record
 }
 
 function queryString(query) {

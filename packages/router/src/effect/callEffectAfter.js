@@ -1,9 +1,13 @@
 export function callEffectAfter(router, from) {
-  const {afterEnter, his} = router
+  const {
+    afterEnter,
+    his: {
+      state: { location }
+    }
+  } = router
   try {
-    afterEnter(his.state.location, from)
-  }
-  catch(err) {
+    afterEnter(location, from)
+  } catch (err) {
     console.error("afterEnter error: ", err)
   }
 }

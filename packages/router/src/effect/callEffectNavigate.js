@@ -13,9 +13,9 @@ export function callEffectNavigate(pathTmpl, router, callback) {
     const fromRecord = his.state.location
     const matchs = resolveRecordMatcher(record)
     record.matchs = matchs
-
-    // callEffectLoader(record, matcher)
-    // callEffectScroll(router)
+    
+    callEffectLoader(record, matcher)
+    callEffectScroll(router, record, fromRecord)
     callback(record)
     callEffectAfter(router, fromRecord)
   } catch (err) {

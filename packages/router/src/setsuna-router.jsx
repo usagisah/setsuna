@@ -12,31 +12,6 @@ import {
   useProvide,
   useState
 } from "@setsuna/setsuna"
-import { Login } from "../page/Login"
-
-// const router = createBrowserRouter({
-//   base: "/",
-//   routes: [
-//     {
-//       path: "/",
-//       redirect: "",
-//       loader: async () => null,
-//       children: []
-//     }
-//   ],
-//   beforeEach: [(to, from) => {}],
-//   afterEach: [(to, from) => {}],
-//   scrollBehavior: (to, from) => {}
-// })
-
-// useRouter()
-// useRoute()
-// useRouterView()
-
-/* 
-  + 注册一个 router 的回调函数，每当改变时就修改向下注入的路由内容
-  + 每次 <RouterView/> 时，用 nextRoute() 取到子路由，如果不同则改变当前使用的组件
-*/
 
 const INJECT_ROUTE_VIEW = Symbol("setsuna route view")
 const INJECT_ROUTE_ORDER = Symbol("setsuna route order")
@@ -77,22 +52,28 @@ export function createBrowserRouter(options) {
 
   const { matchs } = _createBrowserRouter(routeOptions).his.state.location
   return function RouterProvide() {
-    const [views, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
-    const [order, setOrder] = useProvide(INJECT_ROUTE_ORDER, 0)
+    const [_, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
+    useProvide(INJECT_ROUTE_ORDER, 0)
     router$.subscribe(({ to }) => setViews(to.matchs))
     return () => <children />
   }
 }
 
 export const AppRouter = createBrowserRouter({
+  base: "/",
   routes: [
     {
       path: "/",
-      component: <Home />
+      component: <Home />,
+      loader: () => "A"
     },
     {
       path: "/user",
-      component: <User />
+      component: <User />,
+      loader: () => "B"
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  }
 })

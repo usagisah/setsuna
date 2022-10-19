@@ -12,7 +12,8 @@ export function parseLocation(pathExp, router) {
     query: {},
     params: {},
     matchPath: "",
-    matchState: null
+    matchState: null,
+    position: null
   }
   const { pathname, search, hash } = location
   let _path = ""
@@ -32,7 +33,9 @@ export function parseLocation(pathExp, router) {
       _path = pathname
     }
   } else {
-    const { path, query } = pathExp
+    const { path, query, position } = pathExp
+    loc.position = position
+    
     if (type === "hash") {
       loc.pathname = pathname + search
       loc.search = ""

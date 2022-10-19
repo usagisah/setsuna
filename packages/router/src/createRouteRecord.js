@@ -6,8 +6,10 @@ export const EMPTY_RECORD = {
     path: "",
     redirect: null,
     query: {},
-    params: {}
-  }
+    params: {},
+    position: null
+  },
+  matchs: []
 }
 
 export function createRouteRecord(pathTmpl) {
@@ -20,7 +22,8 @@ export function createRouteRecord(pathTmpl) {
       path,
       redirect: matchState && matchState.redirect,
       query,
-      params
+      params,
+      position: null
     },
     matchs: []
   }
