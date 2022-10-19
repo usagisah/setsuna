@@ -76,4 +76,5 @@ export function nextTick(fn) {
   }
 
   postQueue.push(fn)
+  schedulerJobs()
 }
