@@ -1,11 +1,12 @@
 import { isPlainObject } from "@setsuna/share"
+import { nextTick } from "@setsuna/setsuna"
 
 export function callEffectScroll(router, to, from) {
   const { scrollBehavior } = router
-  const savedPostion = from.state.position
+  const savedPosition = from.state.position
 
   if (!scrollBehavior) {
-    to.state.position = savedPostion
+    to.state.position = savedPosition
     return
   }
 
@@ -18,5 +19,11 @@ export function callEffectScroll(router, to, from) {
     to.state.position = res
   } catch (err) {
     console.error("afterEnter error: ", err)
+  } finally {
+    nextTick(() => {
+      try {
+        window.scrollTo(to.state.position)
+      } catch (_) {}
+    })
   }
 }
