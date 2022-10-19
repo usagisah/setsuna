@@ -5,12 +5,12 @@ export function callEffectScroll(router, to, from) {
   const { scrollBehavior } = router
   const savedPosition = from.state.position
 
-  if (!scrollBehavior) {
-    to.state.position = savedPosition
-    return
-  }
-
   try {
+    if (!scrollBehavior) {
+      to.state.position = savedPosition
+      return
+    }
+
     const res = scrollBehavior(to, from, savedPostion)
     if (!isPlainObject(res)) {
       return console.error("scroll error 不是合法的返回值")
