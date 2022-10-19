@@ -15,8 +15,8 @@ import {
 } from "@setsuna/setsuna"
 import { isFunction } from "@setsuna/share"
 
-const INJECT_ROUTE_VIEW = Symbol("setsuna route view")
-const INJECT_ROUTE_ORDER = Symbol("setsuna route order")
+const INJECT_ROUTE_VIEW = "setsuna route view"
+const INJECT_ROUTE_ORDER = "setsuna route order"
 
 export { useRouter, useNavigate } from "./router"
 
@@ -35,13 +35,7 @@ export function useLoaderData() {
     return () => (unmounted = true)
   })
 
-  const _views = views()
-  const _order = order()
-  if (_views === undefined || _order === undefined) {
-    return data
-  }
-
-  _views[_order - 1].loaderData.value.then(data => {
+  views()[order() - 1].loaderData.value.then(data => {
     if (!unmounted) {
       setData(isFunction(data) ? () => data : data)
     }
@@ -77,11 +71,24 @@ export function createBrowserRouter(options) {
     router$.next({ to, from })
   }
 
-  const { matchs } = _createBrowserRouter(routeOptions).his.state.location
+  const appRouter = _createBrowserRouter(routeOptions)
+  const { matchs } = appRouter.his.state.location
+
   return function RouterProvide() {
     const [_, setViews] = useProvide(INJECT_ROUTE_VIEW, matchs)
     useProvide(INJECT_ROUTE_ORDER, 0)
-    router$.subscribe(({ to }) => setViews(to.matchs))
+
+    router$.subscribe(({ to }) => {
+      setViews(to.matchs)
+    })
+
+    useMount(() => {
+      return () => {
+        router$.complete()
+        appRouter.his.destory()
+      }
+    })
+
     return () => <children />
   }
 }

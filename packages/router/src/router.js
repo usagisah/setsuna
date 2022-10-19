@@ -22,6 +22,10 @@ const DEFAULT_GUARD = () => true
 let global_router = null
 
 function createRouter(type, options, createHistory) {
+  if (global_router) {
+    return global_router
+  }
+  
   const { beforeEnter, afterEnter, scrollBehavior } = options
   const router = {
     type,
