@@ -1,4 +1,6 @@
+import { isFunction } from "@setsuna/share"
 import { callWithErrorHandler } from "./handler/callWithErrorHandler"
+import { error } from "./handler/errorHandler"
 
 let pending = true
 let pendingQueue = []
@@ -55,10 +57,23 @@ export function appendJob(job, deep = false) {
 }
 
 function flushPostQueue() {
-  postQueue.forEach(({ VNode, fns }) => {
+  postQueue.forEach(job => {
+    if (isFunction(job)) {
+      return callWithErrorHandler(null, job)
+    }
+
+    const { VNode, fns } = job
     fns.forEach(fn => {
       callWithErrorHandler(VNode, fn)
     })
   })
   postQueue.length = 0
+}
+
+export function nextTick(fn) {
+  if (!isFunction(fn)) {
+    return error("nextTick", "fn is not a function", fn)
+  }
+
+  postQueue.push(fn)
 }
