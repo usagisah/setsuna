@@ -1,5 +1,5 @@
 import { parseRoutePath } from "./parseRoutePath"
-import { isArray, isPlainObject, isString } from "@setsuna/share"
+import { isArray, isFunction, isPlainObject, isString } from "@setsuna/share"
 
 export function createRouterMatcher(router) {
   const { routes } = router.options
@@ -9,7 +9,6 @@ export function createRouterMatcher(router) {
 
   const matcher = new Map()
   routes.forEach(route => createRouteMatcher({ route, deep: 0, matcher }))
-
   return (router.matcher = {
     resolve: key => {
       let res = matcher.get(key)
@@ -58,13 +57,20 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     matchPath: _reg,
     match: "",
     loader,
+    loaderData: {
+      value: Promise.resolve()
+    },
     paramKeys,
     redirect,
     matchRedirect: redirect && parseRoutePath(redirect).matchPath,
-    loaderData: void 0,
     parent,
     children: [],
     options: route
+  }
+
+  if (!isFunction(loader)) {
+    _route.loader = null
+    console.error("router loader is not a function")
   }
 
   if (Array.isArray(children)) {

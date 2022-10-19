@@ -9,14 +9,14 @@ import {
   useComputed,
   useContext,
   useEffect,
+  useMount,
   useProvide,
   useState
 } from "@setsuna/setsuna"
+import { isFunction } from "@setsuna/share"
 
 const INJECT_ROUTE_VIEW = Symbol("setsuna route view")
 const INJECT_ROUTE_ORDER = Symbol("setsuna route order")
-
-export function useRouterView() {}
 
 export { useRouter, useNavigate } from "./router"
 
@@ -24,6 +24,33 @@ export function useRoute() {
   const order = useContext(INJECT_ROUTE_ORDER)
   return useComputed([order], () => useRouter().his.state.location.state)
 }
+
+export function useLoaderData() {
+  const views = useContext(INJECT_ROUTE_VIEW)
+  const order = useContext(INJECT_ROUTE_ORDER)
+  const [data, setData] = useState()
+  let unmounted = false
+
+  useMount(() => {
+    return () => (unmounted = true)
+  })
+
+  const _views = views()
+  const _order = order()
+  if (_views === undefined || _order === undefined) {
+    return data
+  }
+
+  _views[_order - 1].loaderData.value.then(data => {
+    if (!unmounted) {
+      setData(isFunction(data) ? () => data : data)
+    }
+  })
+
+  return data
+}
+
+export function useRouterView() {}
 
 export function RouterView() {
   const views = useContext(INJECT_ROUTE_VIEW)

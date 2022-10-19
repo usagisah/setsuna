@@ -3,11 +3,11 @@ import { nextTick } from "@setsuna/setsuna"
 
 export function callEffectScroll(router, to, from) {
   const { scrollBehavior } = router
-  const savedPosition = from.state.position
+  const savedPostion = from.state.position
 
   try {
     if (!scrollBehavior) {
-      to.state.position = savedPosition
+      to.state.position = savedPostion
       return
     }
 
