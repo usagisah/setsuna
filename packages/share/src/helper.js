@@ -51,3 +51,5 @@ export const def = (target, key, options) =>
     configurable: false,
     ...options
   })
+
+export const isBrowser = () => typeof window
