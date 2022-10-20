@@ -78,9 +78,11 @@ export class Observable {
     }
     const _sub = normalizeSubs(sub)
     this.#subs.push(_sub)
+
+    const self = this
     return function unSubscribe() {
-      const index = this.#subs.indexOf(_sub)
-      index > -1 && this.#subs.splice(index, 1)
+      const index = self.#subs.indexOf(_sub)
+      index > -1 && self.#subs.splice(index, 1)
     }
   }
 
