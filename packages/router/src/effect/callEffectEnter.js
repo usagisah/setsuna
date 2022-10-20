@@ -7,6 +7,10 @@ import { callEffectNavigate } from "./callEffectNavigate"
 export function callEffectEnter(pathTmpl, router) {
   const { beforeEnter, his } = router
   const record = createRouteRecord(pathTmpl, router)
+  if (!record.matchState) {
+    throw null
+  }
+
   const { redirect } = record.matchState
   if (redirect) {
     callEffectNavigate(

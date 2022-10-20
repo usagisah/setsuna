@@ -1,5 +1,3 @@
-import { Home } from "../page/Home"
-import { User } from "../page/User"
 import {
   createBrowserRouter as _createBrowserRouter,
   useRouter
@@ -11,14 +9,15 @@ import {
   useEffect,
   useMount,
   useProvide,
-  useState
+  useState,
+  _jsx
 } from "@setsuna/setsuna"
 import { isFunction } from "@setsuna/share"
 
 const INJECT_ROUTE_VIEW = "setsuna route view"
 const INJECT_ROUTE_ORDER = "setsuna route order"
 
-export { useRouter, useNavigate } from "./router"
+export * from "./router"
 
 export function useRoute() {
   const order = useContext(INJECT_ROUTE_ORDER)
@@ -44,9 +43,7 @@ export function useLoaderData() {
   return data
 }
 
-export function useRouterView() {}
-
-export function RouterView() {
+export function useRouterView() {
   const views = useContext(INJECT_ROUTE_VIEW)
   const order = useContext(INJECT_ROUTE_ORDER)
   const [_, setOrder] = useProvide(INJECT_ROUTE_ORDER, order() + 1)
@@ -61,6 +58,11 @@ export function RouterView() {
     setOrder(order() + 1)
   })
 
+  return component
+}
+
+export function RouterView() {
+  const component = useRouterView()
   return () => component()
 }
 
@@ -84,31 +86,12 @@ export function createBrowserRouter(options) {
 
     useMount(() => {
       return () => {
+        console.log( "???" )
         router$.complete()
         appRouter.his.destory()
       }
     })
 
-    return () => <children />
+    return () => _jsx("children", null)
   }
 }
-
-export const AppRouter = createBrowserRouter({
-  base: "/",
-  routes: [
-    {
-      path: "/",
-      component: <Home />,
-      loader: () => "A",
-      redirect: "/user"
-    },
-    {
-      path: "/user",
-      component: <User />,
-      loader: () => "B"
-    }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }
-  }
-})
