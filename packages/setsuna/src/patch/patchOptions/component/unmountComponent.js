@@ -13,8 +13,11 @@ export function unmountComponent(node) {
   observable.forEach(input$ => {
     callWithErrorHandler(node, () => input$.complete())
   })
-  Object.values(context).forEach(({ input$ }) => {
-    callWithErrorHandler(node, () => input$.complete())
+
+  Reflect.ownKeys(context).forEach(key => {
+    callWithErrorHandler(node, () => {
+      context[key].input$.complete()
+    })
   })
 
   if (subTree) {
