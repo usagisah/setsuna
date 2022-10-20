@@ -3,6 +3,7 @@ import { normalizeSlash } from "../parseRoutePath"
 import { excludeQuery, parseLocation } from "../parseLocation"
 import { createRouteRecord, EMPTY_RECORD } from "../createRouteRecord"
 import { callEffectNavigate } from "../effect/callEffectNavigate"
+import { error } from "../handler"
 
 export function createWebHistory(router) {
   const state = {
@@ -13,7 +14,7 @@ export function createWebHistory(router) {
   function navigate(to, replace) {
     const options = normalizeNavState(to)
     if (!isString(options.path)) {
-      return console.error("push error: path is not a string")
+      return error("navigate", "path is not a string", options.path)
     }
 
     if (!options.force && state.location.loc.path === options.path) {

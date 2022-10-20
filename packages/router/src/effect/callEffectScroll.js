@@ -1,5 +1,6 @@
 import { isPlainObject } from "@setsuna/share"
 import { nextTick } from "@setsuna/setsuna"
+import { error } from "../handler"
 
 export function callEffectScroll(router, to, from) {
   const { scrollBehavior } = router
@@ -13,12 +14,16 @@ export function callEffectScroll(router, to, from) {
 
     const res = scrollBehavior(to, from, savedPostion)
     if (!isPlainObject(res)) {
-      return console.error("scroll error 不是合法的返回值")
+      return error(
+        "scrollBehavior",
+        "The return value of `scrollBehavior()` is not a legal return value",
+        res
+      )
     }
 
     to.state.position = res
   } catch (err) {
-    console.error("afterEnter error: ", err)
+    error("afterEnter", "has a Uncaptured exception", err)
   } finally {
     nextTick(() => {
       try {

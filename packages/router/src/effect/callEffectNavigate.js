@@ -2,6 +2,7 @@ import { callEffectEnter } from "./callEffectEnter"
 import { callEffectLoader } from "./callEffectLoader"
 import { callEffectScroll } from "./callEffectScroll"
 import { callEffectAfter } from "./callEffectAfter"
+import { error } from "../handler"
 
 
 export function callEffectNavigate(pathTmpl, router, callback) {
@@ -20,6 +21,6 @@ export function callEffectNavigate(pathTmpl, router, callback) {
     callEffectAfter(router, fromRecord)
   } catch (err) {
     if (err === null) return
-    console.error("router error:", err)
+    error("", "router call has a uncaught exceptions", err)
   }
 }

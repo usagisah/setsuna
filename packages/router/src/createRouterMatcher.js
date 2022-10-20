@@ -1,5 +1,6 @@
 import { parseRoutePath } from "./parseRoutePath"
 import { isArray, isFunction, isPlainObject, isString } from "@setsuna/share"
+import { error } from "./handler"
 
 export function createRouterMatcher(router) {
   const { routes } = router.options
@@ -52,9 +53,10 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
   }
 
   const [_path, paramKeys] = parseRoutePath(path)
-  const _reg = deep === 0 ? _path : `${parent.matchPath}${_path}`
+  const _regPath = deep === 0 ? _path : `${parent.matchPath}${_path}`
+
   const _route = {
-    matchPath: _reg,
+    matchPath: _regPath,
     match: "",
     loader,
     loaderData: {
@@ -69,7 +71,7 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
 
   if (!isFunction(loader)) {
     _route.loader = null
-    console.error("router loader is not a function")
+    error("loader", "route loader is not a function", loader)
   }
 
   if (Array.isArray(children)) {
@@ -83,8 +85,9 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     )
   }
 
-  const reg = `^${_reg}$`
-  _route.matchPath = reg
-  _route.match = new RegExp(reg)
-  matcher.set(reg, _route)
+  const regPath = `^${_regPath}$`
+  _route.matchPath = regPath
+  _route.match = new RegExp(regPath)
+
+  matcher.set(regPath, _route)
 }

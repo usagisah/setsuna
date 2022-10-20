@@ -1,3 +1,5 @@
+import { error } from "../handler"
+
 export function callEffectAfter(router, from) {
   const {
     afterEnter,
@@ -8,6 +10,6 @@ export function callEffectAfter(router, from) {
   try {
     afterEnter(location, from)
   } catch (err) {
-    console.error("afterEnter error: ", err)
+    error("afterEnter", "has a error", err)
   }
 }

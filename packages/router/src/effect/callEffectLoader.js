@@ -1,3 +1,5 @@
+import { error } from "../handler"
+
 export function callEffectLoader(record) {
   record.matchs.forEach(async ({ loader, loaderData }) => {
     if (!loader) {
@@ -5,7 +7,7 @@ export function callEffectLoader(record) {
     }
 
     loaderData.value = Promise.resolve(loader()).catch(err => {
-      console.error("router loader error: ", err)
+      error("loader", "loader call uncaught exceptions", err)
     })
   })
 }
