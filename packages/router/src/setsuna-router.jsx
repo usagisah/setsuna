@@ -99,7 +99,8 @@ export const AppRouter = createBrowserRouter({
     {
       path: "/",
       component: <Home />,
-      loader: () => "A"
+      loader: () => "A",
+      redirect: "/user"
     },
     {
       path: "/user",

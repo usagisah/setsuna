@@ -62,7 +62,6 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     },
     paramKeys,
     redirect,
-    matchRedirect: redirect && parseRoutePath(redirect).matchPath,
     parent,
     children: [],
     options: route
