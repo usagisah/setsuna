@@ -73,10 +73,15 @@ export function createBrowserRouter(options) {
   const { afterEnter, afterResolve, ...routeOptions } = options
   routeOptions.afterEnter = async (to, from) => {
     try {
-      await Promise.resolve(afterEnter(to, from))
+      if (isFunction(afterEnter)) {
+        await Promise.resolve(afterEnter(to, from))
+      }
+
       router$.next({ to, from })
 
-      nextTick(() => afterResolve(to, from))
+      if (isFunction(afterResolve)) {
+        nextTick(() => afterResolve(to, from))
+      }
     }
     catch(err) {
       error("afterEnter", "call afterEnter has a error", err)
