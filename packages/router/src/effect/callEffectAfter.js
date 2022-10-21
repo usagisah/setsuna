@@ -1,6 +1,6 @@
 import { error } from "../handler"
 
-export function callEffectAfter(router, from) {
+export function callEffectAfter(fromRecord, router) {
   const {
     afterEnter,
     his: {
@@ -8,7 +8,7 @@ export function callEffectAfter(router, from) {
     }
   } = router
   try {
-    afterEnter(location, from)
+    afterEnter(location, fromRecord)
   } catch (err) {
     error("afterEnter", "has a error", err)
   }

@@ -2,17 +2,17 @@ import { isPlainObject } from "@setsuna/share"
 import { nextTick } from "@setsuna/setsuna"
 import { error } from "../handler"
 
-export function callEffectScroll(router, to, from) {
+export function callEffectScroll(to, from, router) {
   const { scrollBehavior } = router
-  const savedPostion = from.state.position
+  const savedPosition = from.state.position
 
   try {
     if (!scrollBehavior) {
-      to.state.position = savedPostion
+      to.state.position = savedPosition
       return
     }
 
-    const res = scrollBehavior(to, from, savedPostion)
+    const res = scrollBehavior(to, from, savedPosition)
     if (!isPlainObject(res)) {
       return error(
         "scrollBehavior",
@@ -23,7 +23,7 @@ export function callEffectScroll(router, to, from) {
 
     to.state.position = res
   } catch (err) {
-    error("afterEnter", "has a Uncaptured exception", err)
+    error("afterEnter", "has a error", err)
   } finally {
     nextTick(() => {
       try {

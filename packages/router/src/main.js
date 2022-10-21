@@ -4,6 +4,7 @@ import {
 } from "./router"
 import { Observable } from "@setsuna/observable"
 import {
+  nextTick,
   useComputed,
   useContext,
   useEffect,
@@ -13,6 +14,7 @@ import {
   _jsx
 } from "@setsuna/setsuna"
 import { isFunction } from "@setsuna/share"
+import { error } from "./handler"
 
 const INJECT_ROUTE_VIEW = "setsuna route view"
 const INJECT_ROUTE_ORDER = "setsuna route order"
@@ -68,9 +70,17 @@ export function RouterView() {
 
 export function createBrowserRouter(options) {
   const router$ = new Observable()
-  const { afterEach, ...routeOptions } = options
-  routeOptions.afterEnter = (to, from) => {
-    router$.next({ to, from })
+  const { afterEnter, afterResolve, ...routeOptions } = options
+  routeOptions.afterEnter = async (to, from) => {
+    try {
+      await Promise.resolve(afterEnter(to, from))
+      router$.next({ to, from })
+
+      nextTick(() => afterResolve(to, from))
+    }
+    catch(err) {
+      error("afterEnter", "call afterEnter has a error", err)
+    }
   }
 
   const appRouter = _createBrowserRouter(routeOptions)
@@ -86,7 +96,6 @@ export function createBrowserRouter(options) {
 
     useMount(() => {
       return () => {
-        console.log( "???" )
         router$.complete()
         appRouter.his.destory()
       }

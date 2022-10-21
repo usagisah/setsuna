@@ -16,11 +16,11 @@ export function callEffectNavigate(pathTmpl, router, callback) {
     record.matchs = matchs
     
     callEffectLoader(record)
-    callEffectScroll(router, record, fromRecord)
     callback(record)
-    callEffectAfter(router, fromRecord)
+    callEffectAfter(fromRecord, router)
+    callEffectScroll(record, fromRecord, router)
   } catch (err) {
     if (err === null) return
-    error("", "router call has a uncaught exceptions", err)
+    error("", "router has a uncaught exceptions", err)
   }
 }
