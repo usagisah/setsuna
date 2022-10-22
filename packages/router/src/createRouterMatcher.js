@@ -69,7 +69,7 @@ export function createRouteMatcher({ route, deep, matcher, parent }) {
     options: route
   }
 
-  if (!isFunction(loader)) {
+  if (loader && !isFunction(loader)) {
     _route.loader = null
     error("loader", "route loader is not a function", loader)
   }

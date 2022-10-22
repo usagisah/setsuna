@@ -45,6 +45,7 @@ export function setsunaPlugin() {
             visitor: {
               Program(path) {
                 hmrComponent = injectHMRInfo({ id, body: path.node.body })
+                injectImport(path)
               },
               ImportSpecifier(path) {
                 if (
@@ -73,8 +74,6 @@ export function setsunaPlugin() {
           }
         ].filter(Boolean)
       })
-
-      injectImport({ result })
       
       if (!isProd) {
         injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })

@@ -68,6 +68,33 @@ export function RouterView() {
   return () => component()
 }
 
+export function Lazy({ load }) {
+  if (!isFunction(load)) {
+    throw "Lazy component: parameter 'load' is not a legal function "
+  }
+
+  const [component, setComponent] = useState(null)
+  load().then(
+    res => {
+      if (res.default) {
+        return setComponent(_jsx(res.default))
+      }
+
+      const modules = Object.entries(res)
+      for (let index = 0; index < modules.length; index++) {
+        const [key, value] = modules[index]
+        const _key = key[0]
+        if (isFunction(value) && _key === _key.toUpperCase()) {
+          return setComponent(_jsx(value))
+        }
+      }
+    },
+    err => error("component lazy", "loading has a error", err)
+  )
+
+  return () => component()
+}
+
 export function createBrowserRouter(options) {
   const router$ = new Observable()
   const { afterEnter, afterResolve, ...routeOptions } = options
@@ -82,8 +109,7 @@ export function createBrowserRouter(options) {
       if (isFunction(afterResolve)) {
         nextTick(() => afterResolve(to, from))
       }
-    }
-    catch(err) {
+    } catch (err) {
       error("afterEnter", "call afterEnter has a error", err)
     }
   }
