@@ -4,101 +4,129 @@ import pluginReplace from "@rollup/plugin-replace"
 import pluginCommonjs from "@rollup/plugin-commonjs"
 import { nodeResolve as pluginNodeResolve } from "@rollup/plugin-node-resolve"
 import { terser } from "rollup-plugin-terser"
-import { removeSync } from "fs-extra"
 
-const { target, env } = process.env
+const { target, env, sourcemap } = process.env
 if (!target) {
   throw new Error(
     "[build params error]: build pkg target is undefine, please specified target pkg"
   )
 }
 
-const sourcemap = JSON.parse(process.env.sourcemap)
-const packageDir = path.resolve(__dirname, "packages", target)
-const resolvePath = p => path.resolve(packageDir, p)
-const name = target
-const formats = ["es", "cjs"]
+const sourceMap = JSON.parse(sourcemap)
+const resolvePath = p => path.resolve(__dirname, "packages", target, p)
 
-removeSync(resolvePath("dist"))
-
-const createBuildConfig = () => {
-  return formats
-    .map(format => {
-      return name !== "setsuna"
-        ? [
-            createConfig({
-              name: `${name}.${format}`,
-              entity: "main",
-              format,
-              plugins: []
-            }),
-            env === "prod" &&
-              createConfig({
-                name: `${name}.${format}.min`,
-                entity: "main",
-                format,
-                plugins: [terser()]
-              })
-          ]
-        : ["main", "external", "server-renderer"].map(item => [
-            createConfig({
-              name: item === "main" ? `${name}.${format}` : `${item}.${format}`,
-              entity: item,
-              format,
-              ext: ".dev",
-              plugins: []
-            }),
-            env === "prod" &&
-              createConfig({
-                name:
-                  item === "main"
-                    ? `${name}.${format}.min`
-                    : `${item}.${format}.min`,
-                entity: item,
-                format,
-                ext: ".prod",
-                plugins: [terser()]
-              })
-          ])
-    })
-    .flat(Infinity)
-    .filter(Boolean)
-}
-
-const pkgConfig = createBuildConfig()
-
-export default pkgConfig
-
-function createConfig({ name, entity, format, plugins = [] }) {
-  return {
-    input: resolvePath(`src/${entity}.js`),
-    external: ["@setsuna/setsuna", "@babel/core"],
-    plugins: [
-      pluginJson(),
-      pluginReplace({
-        preventAssignment: true,
-        sourceMap: sourcemap,
-        values: {
-          __DEV__: (env === "dev").toString()
-        }
-      }),
-      ...(format === "cjs"
-        ? [
-            pluginCommonjs({
-              sourceMap: sourcemap
-            }),
-            pluginNodeResolve()
-          ]
-        : []),
-      ...plugins
-    ],
-    output: {
-      name,
-      sourcemap,
-      externalLiveBindings: false,
-      file: resolvePath(`dist/${name}.js`),
-      format
+/* 
+  {
+      entity: [],
+      format: ["es"],
+      plugins: [],
+      external: []
+    }
+*/
+const pkgConfigs = {
+  observable: {
+    dev: {
+      format: ["es"]
     },
-    treeshake: { moduleSideEffects: false }
+    prod: {
+      format: ["es", "cjs", "iife"]
+    }
+  },
+  "plugin-setsuna": {
+    dev: {},
+    prod: {}
+  },
+  router: {
+    dev: {
+      format: ["es"]
+    },
+    prod: {
+      format: ["es", "cjs", "iife"]
+    }
+  },
+  setsuna: {
+    dev: {
+      entity: ["main", "server-renderer"],
+      format: ["es"]
+    },
+    prod: {
+      entity: ["main", "server-renderer"],
+      format: ["es", "cjs", "iife"]
+    }
+  },
+  ["setsuna-use"]: {
+    dev: {
+      format: ["es"]
+    },
+    prod: {
+      format: ["es", "cjs", "iife"]
+    }
+  },
+  share: {
+    dev: {
+      format: ["es"]
+    },
+    prod: {
+      format: ["es", "cjs"]
+    }
   }
 }
+
+function createBuildConfig() {
+  const {
+    entity = ["main"],
+    format = ["cjs", "es"],
+    plugins = env === "dev" ? [] : [terser()],
+    external = []
+  } = pkgConfigs[target][env]
+
+  console.log( env )
+
+  return format
+    .map(format => {
+      return entity.map(entity => {
+        return {
+          input: resolvePath(`src/${entity}.js`),
+          external: [
+            "@setsuna/setsuna",
+            "@babel/core",
+            "@setsuna/observable"
+          ].concat(external),
+          plugins: [
+            pluginJson(),
+            pluginReplace({
+              preventAssignment: true,
+              sourceMap: sourceMap,
+              values: {
+                __DEV__: (env === "dev").toString()
+              }
+            }),
+            ...(format === "cjs"
+              ? [
+                  pluginCommonjs({
+                    sourceMap: sourceMap
+                  }),
+                  pluginNodeResolve()
+                ]
+              : []),
+            ...plugins
+          ],
+          output: {
+            name: target,
+            sourcemap: sourceMap,
+            externalLiveBindings: false,
+            file: resolvePath(
+              `dist/${entity === "main" ? target : entity}.${
+                format === "cjs" ? "cjs" : format === "es" ? "mjs" : "js"
+              }`
+            ),
+            format
+          },
+          treeshake: { moduleSideEffects: false }
+        }
+      })
+    })
+    .flat(Infinity)
+}
+
+export default createBuildConfig()

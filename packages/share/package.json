@@ -11,12 +11,12 @@
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
-      "require": "./dist/share.cjs.js",
-      "import": "./dist/share.es.js"
+      "require": "./dist/share.cjs",
+      "import": "./dist/share.mjs"
     }
   },
-  "main": "dist/share.cjs.js",
-  "module": "dist/share.es.js",
+  "main": "dist/share.cjs",
+  "module": "dist/share.mjs",
   "files": [
     "dist"
   ],

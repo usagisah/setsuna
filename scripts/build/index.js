@@ -1,7 +1,10 @@
 import { createRequire } from "module"
 import { cpus } from "os"
 import minimist from "minimist"
+import fs from "fs-extra"
+import path from "path"
 const require = createRequire(import.meta.url)
+
 
 import { execa } from "execa"
 import chalk from "chalk"
@@ -27,6 +30,8 @@ if (targets.length === 0) {
 async function build() {
   const workingJobs = []
   for (const target of targets) {
+    fs.removeSync(path.resolve(process.cwd(), "packages", target, "dist"))
+    
     const promise = Promise.resolve(invokeBuild(target))
     if (maxConcurrent <= targets.length) {
       const job = promise.then(() =>

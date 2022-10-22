@@ -19,6 +19,8 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-replace": "^4.0.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/minimist": "^1.2.2",
     "@types/node": "^18.7.18",
     "chalk": "^5.0.1",
     "conventional-changelog-cli": "^2.2.2",
