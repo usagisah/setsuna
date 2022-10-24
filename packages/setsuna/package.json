@@ -11,16 +11,16 @@
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
-      "require": "./dist/setsuna.cjs",
-      "import": "./dist/setsuna.mjs"
+      "require": "./dist/setsuna.js",
+      "import": "./dist/setsuna.js"
     },
     "./server-renderer": {
-      "require": "./dist/server-renderer.cjs",
-      "import": "./dist/server-renderer.mjs"
+      "require": "./dist/server-renderer.js",
+      "import": "./dist/server-renderer.js"
     }
   },
-  "main": "dist/setsuna.cjs",
-  "module": "dist/setsuna.mjs",
+  "main": "dist/setsuna.js",
+  "module": "dist/setsuna.js",
   "files": [
     "dist"
   ],

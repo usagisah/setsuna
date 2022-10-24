@@ -10,11 +10,11 @@
   "license": "MIT",
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
-    "require": "./dist/observable.cjs",
-    "import": "./dist/observable.mjs"
+    "require": "./dist/observable.js",
+    "import": "./dist/observable.js"
   },
-  "main": "dist/observable.cjs",
-  "module": "dist/observable.mjs",
+  "main": "dist/observable.js",
+  "module": "dist/observable.js",
   "files": [
     "dist",
     "src"

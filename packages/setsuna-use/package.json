@@ -11,8 +11,8 @@
   ],
   "license": "MIT",
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
-  "main": "dist/setsuna-use.cjs",
-  "module": "dist/setsuna-use.mjs",
+  "main": "dist/setsuna-use.js",
+  "module": "dist/setsuna-use.js",
   "files": [
     "dist"
   ],

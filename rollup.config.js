@@ -116,9 +116,7 @@ function createBuildConfig() {
             sourcemap: sourceMap,
             externalLiveBindings: false,
             file: resolvePath(
-              `dist/${entity === "main" ? target : entity}.${
-                format === "cjs" ? "cjs" : format === "es" ? "mjs" : "js"
-              }`
+              `dist/${entity === "main" ? target : entity}.js`
             ),
             format
           },
