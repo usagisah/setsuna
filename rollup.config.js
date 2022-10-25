@@ -33,7 +33,11 @@ const pkgConfigs = {
     }
   },
   "plugin-setsuna": {
-    dev: {},
+    dev: {
+      dev: {
+        format: ["es", "cjs"]
+      },
+    },
     prod: {}
   },
   router: {
@@ -116,7 +120,7 @@ function createBuildConfig() {
             sourcemap: sourceMap,
             externalLiveBindings: false,
             file: resolvePath(
-              `dist/${entity === "main" ? target : entity}.js`
+              `dist/${entity === "main" ? target : entity}${format === "cjs" ? ".cjs" : ".js"}`
             ),
             format
           },
