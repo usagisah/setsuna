@@ -36,8 +36,15 @@ npm i @setsuna/router
 
 + <a href="#RouterView">RouterView</a>
 
-+ <a href="#全局钩子">全局钩子</a>
++ <a href="#Lazy">Lazy</a>
 
++ 全局钩子
+
+  + <a href="#useRoute">useRoute</a>
+  + <a href="#useNavigate">useNavigate</a>
+  + <a href="#useRoute">useRoute</a>
+  + <a href="基于 `loader` 进行快速并发请求">基于 `loader` 进行快速并发请求</a>
+  
   
 
 
@@ -294,4 +301,30 @@ export const AppRouter = createBrowserRouter({
 ```
 
 
+
+## useNavigate
+
+用于进行跳转的 Api
+
+```javascript
+import { RouterView, useNavigate } from "@setsuna/router"
+
+export function App() {
+  const {
+    push,
+    replace,
+    go,
+    back,
+    forward
+  } = useNavigate()
+  
+  return () => <RouterView />
+}
+```
+
++ `push( toPath || { path, query, force } )` 用于跳转，会添加一条路由记录
++ `replace( toPath || { path, query, force } )` 用于跳转，不会添加一条路由记录
++ `go( number )`  0表示当前页跳转，>0 表示前进到第 number 条路由记录， <0 表示回退几条
++ `back` 相当于 `go(-1)`
++ `forward` 相当于`go(0)`
 
