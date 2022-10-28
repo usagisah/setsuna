@@ -10,10 +10,13 @@
   "license": "MIT",
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
-    "require": "./dist/observable.js",
-    "import": "./dist/observable.js"
+    ".": {
+      "require": "./index.js",
+      "import": "./dist/observable.js"
+    },
+    "./dist/*": "./dist/*"
   },
-  "main": "dist/observable.js",
+  "main": "index.js",
   "module": "dist/observable.js",
   "files": [
     "dist",

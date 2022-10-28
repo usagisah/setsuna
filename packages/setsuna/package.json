@@ -11,17 +11,19 @@
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
-      "require": "./dist/setsuna.js",
+      "require": "./index.js",
       "import": "./dist/setsuna.js"
     },
     "./server-renderer": {
-      "require": "./dist/server-renderer.js",
+      "require": "./server-renderer.js",
       "import": "./dist/server-renderer.js"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
-  "main": "dist/setsuna.js",
+  "main": "index.js",
   "module": "dist/setsuna.js",
   "files": [
+    "index.js",
     "dist"
   ],
   "dependencies": {

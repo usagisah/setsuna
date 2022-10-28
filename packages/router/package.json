@@ -11,11 +11,12 @@
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
-      "require": "./dist/router.js",
+      "require": "./index.js",
       "import": "./dist/router.js"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
-  "main": "dist/router.js",
+  "main": "index.js",
   "module": "dist/router.js",
   "files": [
     "dist"

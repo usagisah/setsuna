@@ -9,9 +9,14 @@
   ],
   "license": "MIT",
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
-  "main": "dist/plugin-setsuna.cjs",
+  "exports": {
+    "require": "./index.js",
+    "import": "./dist/plugin-setsuna.js"
+  },
+  "main": "index.js",
   "module": "dist/plugin-setsuna.js",
   "files": [
+    "index.js",
     "dist"
   ],
   "dependencies": {

@@ -114,7 +114,7 @@ function createBuildConfig() {
       externalLiveBindings: false,
       file: resolvePath(
         `dist/${entity === "main" ? target : entity}${ext}${
-          format === "cjs" ? ".cjs" : ".js"
+          format === "cjs" ? ".cjs" : format === "iife" ? ".global.js" : ".js"
         }`
       ),
       format
@@ -130,6 +130,10 @@ function createBuildConfig() {
 
   if (env === "prod") {
     plugins.push(terser())
+    if (format.includes("es")) {
+      format.splice(format.indexOf("es"), 1)
+    }
+
     configs = configs.concat(
       format
         .map(format => {

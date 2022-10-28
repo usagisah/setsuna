@@ -11,13 +11,15 @@
   "author": "@gxs/usagisah <email@1286791152@qq.com>",
   "exports": {
     ".": {
-      "require": "./dist/share.js",
+      "require": "./index.js",
       "import": "./dist/share.js"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
-  "main": "dist/share.js",
+  "main": "index.js",
   "module": "dist/share.js",
   "files": [
+    "index.js",
     "dist"
   ],
   "dependencies": {
