@@ -34,11 +34,11 @@ const pkgConfigs = {
   },
   "plugin-setsuna": {
     dev: {
-      dev: {
-        format: ["es", "cjs"]
-      },
+      format: ["es", "cjs"]
     },
-    prod: {}
+    prod: {
+      format: ["es", "cjs"]
+    }
   },
   router: {
     dev: {
@@ -80,55 +80,66 @@ function createBuildConfig() {
   const {
     entity = ["main"],
     format = ["cjs", "es"],
-    plugins = env === "dev" ? [] : [terser()],
+    plugins = [],
     external = []
   } = pkgConfigs[target][env]
 
-  console.log( env )
-
-  return format
-    .map(format => {
-      return entity.map(entity => {
-        return {
-          input: resolvePath(`src/${entity}.js`),
-          external: [
-            "@setsuna/setsuna",
-            "@babel/core",
-            "@setsuna/observable"
-          ].concat(external),
-          plugins: [
-            pluginJson(),
-            pluginReplace({
-              preventAssignment: true,
-              sourceMap: sourceMap,
-              values: {
-                __DEV__: (env === "dev").toString()
-              }
-            }),
-            ...(format === "cjs"
-              ? [
-                  pluginCommonjs({
-                    sourceMap: sourceMap
-                  }),
-                  pluginNodeResolve()
-                ]
-              : []),
-            ...plugins
-          ],
-          output: {
-            name: target,
-            sourcemap: sourceMap,
-            externalLiveBindings: false,
-            file: resolvePath(
-              `dist/${entity === "main" ? target : entity}${format === "cjs" ? ".cjs" : ".js"}`
-            ),
-            format
-          },
-          treeshake: { moduleSideEffects: false }
+  const createConfig = (entity, format, ext = "") => ({
+    input: resolvePath(`src/${entity}.js`),
+    external: ["@setsuna/setsuna", "@babel/core", "@setsuna/observable"].concat(
+      external
+    ),
+    plugins: [
+      pluginJson(),
+      pluginReplace({
+        preventAssignment: true,
+        sourceMap: sourceMap,
+        values: {
+          __DEV__: (env === "dev").toString()
         }
-      })
+      }),
+      ...(format === "cjs"
+        ? [
+            pluginCommonjs({
+              sourceMap: sourceMap
+            }),
+            pluginNodeResolve()
+          ]
+        : []),
+      ...plugins
+    ],
+    output: {
+      name: target,
+      sourcemap: sourceMap,
+      externalLiveBindings: false,
+      file: resolvePath(
+        `dist/${entity === "main" ? target : entity}${ext}${
+          format === "cjs" ? ".cjs" : ".js"
+        }`
+      ),
+      format
+    },
+    treeshake: { moduleSideEffects: false }
+  })
+
+  let configs = format
+    .map(format => {
+      return entity.map(entity => createConfig(entity, format))
     })
     .flat(Infinity)
+
+  if (env === "prod") {
+    plugins.push(terser())
+    configs = configs.concat(
+      format
+        .map(format => {
+          return entity.map(entity => createConfig(entity, format, ".prod"))
+        })
+        .flat(Infinity)
+    )
+  }
+
+  return configs
 }
 
 export default createBuildConfig()
