@@ -2,9 +2,6 @@
 
 
 
-<p align="center"><span>中文</span>  <a href="">English</a></p>
-
-
 
 ## 介绍
 
@@ -53,29 +50,26 @@
 ## 导航
 
 + <a href="#下载">下载</a>
-+ <a href="#基本使用">基本使用</a>
-+ <a href="#基本使用">组件</a>
-+ <a href="#基本使用">渲染 API</a>
-+ <a href="#基本使用">hooks（用于**创建内部状态，以及绑定组件生命周期**的一系列方法的集合）</a>
-  + <a href="#基本使用">useState</a>
-  + <a href="#基本使用">useComputed</a>
-  + <a href="#基本使用">useRef</a>
-  + <a href="#基本使用">useEffect</a>
-  + <a href="#基本使用">useProvide/useContext</a>
-  + <a href="#基本使用">useMount</a>
-  + <a href="#基本使用">useUpdate</a>
-+ <a href="#基本使用">调度 API</a>
++ <a href="#组件">组件</a>
++ <a href="#渲染API">渲染API</a>
++ hooks（用于**创建内部状态，以及绑定组件生命周期**的一系列方法的集合）
+  + <a href="#useState">useState</a>
+  + <a href="#useComputed">useComputed</a>
+  + <a href="#useRef">useRef</a>
+  + <a href="#useEffect">useEffect</a>
+  + <a href="#useProvide & useContext">useProvide & useContext</a>
+  + <a href="#useMount">useMount</a>
+  + <a href="#useUpdate">useUpdate</a>
++ <a href="#调度API">调度API</a>
 + 特性组件
-  + <a href="#基本使用">`<Await/>`</a>
-  + <a href="#基本使用">`<Teleport/>`</a>
-  + <a href="#基本使用">`<Fragment/>`</a>
-+ <a href="#基本使用">web component</a>
-+ <a href="#基本使用">SSR</a>
-+ <a href="#基本使用">周边设施库</a>
-  + <a href="#基本使用">响应式约定实现 `@setsuna/observable`</a>
-  + <a href="#基本使用">路由 `@setsuna/router`</a>
-  + <a href="#基本使用">工具库 `setsuna-use`</a>
-  + <a href="#基本使用">vite插件 `@setsuna/plugin-setsuna`</a>
+  + <a href="#Await">`<Await/>`</a>
+  + <a href="#Teleport">`<Teleport/>`</a>
+  + <a href="#Fragment">`<Fragment/>`</a>
++ <a href="#web component">web component</a>
++ <a href="#SSR">SSR</a>
++ <a href="https://github.com/usagisah/setsuna">周边设施库</a>
+  + <a href="https://github.com/usagisah/setsuna/tree/main/docs/zh/@setsuna-observable">响应式约定实现 `@setsuna/observable`</a>
+  + <a href="https://github.com/usagisah/setsuna/tree/main/docs/zh/@setsuna-router">路由 `@setsuna/router`</a>
 
 
 
@@ -135,7 +129,7 @@ render(
 
 
 
-## 渲染 API
+## 渲染API
 
 `render( VNode, HTMLElement )`
 
@@ -289,7 +283,7 @@ export function Comp() {
 
 
 
-## useProvide/useContext
+## useProvide & useContext
 
 用于**创建和消费，跨组件层级的响应式状态**
 
@@ -408,7 +402,7 @@ nextTick(() => {
 
 
 
-## `<Fragment />`
+## Fragment
 
 文档脆片，该组件在视图上不会渲染出实际的节点，用于解决组件必须被包裹在某个节点的问题
 
@@ -432,7 +426,7 @@ function Component() {
 
 
 
-## `<Await />`
+## Await
 
 该组件为异步组件，该组件会扫描所有的**浅层节点（没有经过嵌套）**，如果存在`函数，Promise`则会执行他们并等待他们的完成
 
@@ -468,7 +462,7 @@ export function Comp() {
 
 
 
-## `<Teleport />`
+## Teleport
 
 传送门组件，可以将子节点挂载到指定的 DOM 节点上，对于`<Tost/>`这种弹窗组件会很好用
 
