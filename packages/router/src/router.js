@@ -5,7 +5,6 @@ import { createWebHistory } from "./history/web"
 import { createMemoryHistory } from "./history/memory"
 import { parseLocation } from "./parseLocation"
 
-
 export function createBrowserRouter(options) {
   return createRouter("history", options, createWebHistory)
 }
@@ -25,7 +24,7 @@ function createRouter(type, options, createHistory) {
   if (global_router) {
     return global_router
   }
-  
+
   const { beforeEnter, afterEnter, scrollBehavior } = options
   const router = {
     type,

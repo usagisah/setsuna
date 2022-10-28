@@ -3,7 +3,6 @@ import { error } from "../handler/errorHandler"
 import { useEffect } from "./useEffect"
 import { createState } from "./useState"
 
-
 export function useComputed(subObs, options) {
   let getter = () => {
     return error("hook-useComputed", "getter 获取器未定义，获取失败")
@@ -31,4 +30,3 @@ export function useComputed(subObs, options) {
 
   return [state, setState, input$]
 }
-

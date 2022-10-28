@@ -35,7 +35,7 @@ export function parseLocation(pathExp, router) {
   } else {
     const { path, query, position } = pathExp
     loc.position = position
-    
+
     if (type === "hash") {
       loc.pathname = pathname + search
       loc.search = ""

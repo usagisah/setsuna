@@ -4,11 +4,18 @@
   "description": "Provide @setsuna/setsuna jsx support with HMR",
   "keywords": [
     "setsuna",
-    "@setsuna",
     "@setsuna/plugin-setsuna"
   ],
+  "homepage": "https://github.com/usagisah/setsuna#readme",
+  "bugs": {
+    "url": "https://github.com/usagisah/setsuna/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usagisah/setsuna.git"
+  },
   "license": "MIT",
-  "author": "@gxs/usagisah <email@1286791152@qq.com>",
+  "author": "@顾弦笙/usagisah <1286791152@qq.com>",
   "exports": {
     "require": "./index.js",
     "import": "./dist/plugin-setsuna.js"

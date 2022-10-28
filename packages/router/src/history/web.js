@@ -135,7 +135,10 @@ function normalizeLocation(router) {
     return EMPTY_RECORD
   }
 
-  const record = createRouteRecord(parseLocation(state.setsuna_router, router), router)
+  const record = createRouteRecord(
+    parseLocation(state.setsuna_router, router),
+    router
+  )
   record.state.position = record.loc.position
   return record
 }

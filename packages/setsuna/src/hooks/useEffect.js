@@ -5,7 +5,8 @@ import { error } from "../handler/errorHandler"
 export function useEffect(subObs, subscribe) {
   if (!isArray(subObs)) {
     return error(
-      "hook-useEffect", "观察者目标必须是一个 Array<Observable> | Array<State> 类型的数组"
+      "hook-useEffect",
+      "观察者目标必须是一个 Array<Observable> | Array<State> 类型的数组"
     )
   }
   subObs.forEach(value => {

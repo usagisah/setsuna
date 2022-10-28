@@ -4,11 +4,10 @@
   "description": "@Tool functions shared internally by `@setsuna`",
   "keywords": [
     "setsuna",
-    "@setsuna",
     "@setsuna/share"
   ],
   "license": "MIT",
-  "author": "@gxs/usagisah <email@1286791152@qq.com>",
+  "author": "@顾弦笙/usagisah <1286791152@qq.com>",
   "exports": {
     ".": {
       "require": "./index.js",

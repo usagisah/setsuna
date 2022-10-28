@@ -74,7 +74,7 @@ export function setsunaPlugin() {
           }
         ].filter(Boolean)
       })
-      
+
       if (!isProd) {
         injectAutoReload({ result, hasRender, hasDefineElement, hmrComponent })
       }

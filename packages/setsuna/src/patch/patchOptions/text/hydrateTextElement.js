@@ -8,10 +8,7 @@ export function hydrateTextElement(context) {
   hydrateNode = hydrateNode ?? container.firstChild
 
   if (!hydrateNode) {
-    error(
-      "hydrate text",
-      `节点对不上，期望得到(<text />)，却匹配到(\`null\`)`
-    )
+    error("hydrate text", `节点对不上，期望得到(<text />)，却匹配到(\`null\`)`)
     mountTextElement({ ...context, anchor: null })
     return null
   }
