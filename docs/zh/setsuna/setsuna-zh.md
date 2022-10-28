@@ -68,8 +68,8 @@
 + <a href="#web component">web component</a>
 + <a href="#SSR">SSR</a>
 + <a href="https://github.com/usagisah/setsuna">周边设施库</a>
-  + <a href="https://github.com/usagisah/setsuna/tree/main/docs/zh/@setsuna-observable">响应式约定实现 `@setsuna/observable`</a>
-  + <a href="https://github.com/usagisah/setsuna/tree/main/docs/zh/@setsuna-router">路由 `@setsuna/router`</a>
+  + <a href="https://github.com/usagisah/setsuna/blob/main/docs/zh/observable/observable-zh.md">响应式约定实现 `@setsuna/observable`</a>
+  + <a href="https://github.com/usagisah/setsuna/blob/main/docs/zh/router/router-zh.md">路由 `@setsuna/router`</a>
 
 
 

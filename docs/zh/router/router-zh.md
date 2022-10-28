@@ -32,7 +32,7 @@ npm i @setsuna/router
 
 + <a href="#基本使用">基本使用</a>
 
-+ <a href="#创建路由器">创建路由器</a>
++ <a href="#创建路由">创建路由</a>
 
 + <a href="#RouterView">RouterView</a>
 
@@ -43,7 +43,7 @@ npm i @setsuna/router
   + <a href="#useRoute">useRoute</a>
   + <a href="#useNavigate">useNavigate</a>
   + <a href="#useRoute">useRoute</a>
-  + <a href="基于 `loader` 进行快速并发请求">基于 `loader` 进行快速并发请求</a>
+  + <a href="#基于-loader-进行快速并发请求">基于 `loader` 进行快速并发请求</a>
   
   
 
