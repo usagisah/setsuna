@@ -57,7 +57,7 @@
   + <a href="#useComputed">useComputed</a>
   + <a href="#useRef">useRef</a>
   + <a href="#useEffect">useEffect</a>
-  + <a href="#useProvide & useContext">useProvide & useContext</a>
+  + <a href="#useprovide--usecontext">useProvide & useContext</a>
   + <a href="#useMount">useMount</a>
   + <a href="#useUpdate">useUpdate</a>
 + <a href="#调度API">调度API</a>

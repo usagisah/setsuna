@@ -5,5 +5,5 @@
 
 
 + `@setsuna/setsuna`
-  + <a href="https://github.com/usagisah/setsuna/tree/main/docs/setsuna/setsuna-zh.md">中文</a>
+  + <a href="https://github.com/usagisah/setsuna/blob/main/docs/zh/setsuna/setsuna-zh.md">中文</a>
 
