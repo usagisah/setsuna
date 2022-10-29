@@ -1,4 +1,4 @@
-import { isObservable } from "@setsuna/observable"
+import { isObservable } from "@setsunajs/observable"
 import { isFunction, isPlainObject } from "./type"
 
 export function resolveObservableState(value) {

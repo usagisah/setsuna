@@ -1,5 +1,5 @@
 import { parseRoutePath } from "./parseRoutePath"
-import { isArray, isFunction, isPlainObject, isString } from "@setsuna/share"
+import { isArray, isFunction, isPlainObject, isString } from "@setsunajs/share"
 import { error } from "./handler"
 
 export function createRouterMatcher(router) {

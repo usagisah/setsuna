@@ -1,10 +1,10 @@
 {
   "name": "@setsunajs/plugin-setsuna",
-  "version": "0.1.0",
-  "description": "Provide @setsuna/setsuna jsx support with HMR",
+  "version": "0.1.2",
+  "description": "Provide @setsunajs/setsuna jsx support with HMR",
   "keywords": [
     "setsuna",
-    "@setsuna/plugin-setsuna"
+    "@setsunajs/plugin-setsuna"
   ],
   "homepage": "https://github.com/usagisah/setsuna#readme",
   "bugs": {

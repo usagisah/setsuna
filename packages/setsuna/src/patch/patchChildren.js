@@ -1,5 +1,5 @@
 import { getNextSibling, insertElement } from "../node/nodeOpts"
-import { isSomeVNode, isUndefined } from "@setsuna/share"
+import { isSomeVNode, isUndefined } from "@setsunajs/share"
 import { patch } from "./patch"
 import { unmount } from "./unmount"
 

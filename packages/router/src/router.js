@@ -1,4 +1,4 @@
-import { isFunction, isBrowser } from "@setsuna/share"
+import { isFunction, isBrowser } from "@setsunajs/share"
 import { createRouterMatcher } from "./createRouterMatcher"
 import { callEffectNavigate } from "./effect/callEffectNavigate"
 import { createWebHistory } from "./history/web"

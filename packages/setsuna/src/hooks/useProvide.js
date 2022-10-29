@@ -1,4 +1,4 @@
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { getCurrentInstance } from "../patch/patchOptions/component/currentInstance"
 import { createState } from "./useState"
 

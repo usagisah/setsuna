@@ -1,8 +1,8 @@
 import { callWithErrorHandler } from "../../../handler/callWithErrorHandler"
 import { normalizeChildren } from "../../../jsx"
 import { getElementNextSibling, removeElement } from "../../../node/nodeOpts"
-import { resolveNextNodes } from "@setsuna/share"
-import { isFunction, isPromise } from "@setsuna/share"
+import { resolveNextNodes } from "@setsunajs/share"
+import { isFunction, isPromise } from "@setsunajs/share"
 import { patchFragment } from "../fragment/patchFragment"
 import { mountAwait } from "./mountAwait"
 

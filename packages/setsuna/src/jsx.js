@@ -1,5 +1,5 @@
-import { omit } from "@setsuna/share"
-import { isArray, isFunction, isPlainObject, isPromise } from "@setsuna/share"
+import { omit } from "@setsunajs/share"
+import { isArray, isFunction, isPlainObject, isPromise } from "@setsunajs/share"
 
 export const _node_flag = Symbol("VNode")
 export const isVNode = value => isPlainObject(value) && value[_node_flag]

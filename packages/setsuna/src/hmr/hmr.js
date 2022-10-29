@@ -1,6 +1,6 @@
 import { patch } from "../patch/patch"
 import { _jsx } from "../jsx"
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { isWebComponent } from "../components/WebComponent"
 
 if (!globalThis?.window?.__SETSUNA_HMR_MAP__) {

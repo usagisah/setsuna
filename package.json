@@ -7,13 +7,7 @@
     "build": "node scripts/build",
     "format": "prettier --w **/*.{js,json}"
   },
-  "dependencies": {
-    "@setsuna/observable": "workspace:^0.0.1",
-    "@setsuna/plugin-setsuna": "workspace:^0.0.1",
-    "@setsuna/setsuna": "workspace:^0.0.1",
-    "@setsuna/setsuna-use": "workspace:^0.0.1",
-    "@setsuna/share": "workspace:^0.0.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-json": "^4.1.0",

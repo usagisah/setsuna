@@ -1,3 +1,4 @@
+
 import path from "path"
 import pluginJson from "@rollup/plugin-json"
 import pluginReplace from "@rollup/plugin-replace"
@@ -83,6 +84,7 @@ function createBuildConfig() {
     plugins = [],
     external = []
   } = pkgConfigs[target][env]
+  let DEV = true
 
   const createConfig = (entity, format, ext = "") => ({
     input: resolvePath(`src/${entity}.js`),
@@ -95,7 +97,7 @@ function createBuildConfig() {
         preventAssignment: true,
         sourceMap: sourceMap,
         values: {
-          __DEV__: (env === "dev").toString()
+          __DEV__: DEV
         }
       }),
       ...(format === "cjs"
@@ -129,11 +131,8 @@ function createBuildConfig() {
     .flat(Infinity)
 
   if (env === "prod") {
+    DEV = false
     plugins.push(terser())
-    if (format.includes("es")) {
-      format.splice(format.indexOf("es"), 1)
-    }
-
     configs = configs.concat(
       format
         .map(format => {

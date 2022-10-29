@@ -13,7 +13,7 @@ export function injectImport(path) {
           types.Identifier("Fragment")
         )
       ],
-      types.StringLiteral("@setsuna/setsuna")
+      types.StringLiteral("@setsunajs/setsuna")
     )
   )
 }

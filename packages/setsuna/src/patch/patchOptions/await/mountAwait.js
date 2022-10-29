@@ -1,5 +1,5 @@
 import { normalizeChildren } from "../../../jsx"
-import { isFunction, isPromise } from "@setsuna/share"
+import { isFunction, isPromise } from "@setsunajs/share"
 import { patchFragment } from "../fragment/patchFragment"
 
 export function mountAwait(context) {

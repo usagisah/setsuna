@@ -1,7 +1,7 @@
 import { Await } from "../components/Await"
 import { Fragment } from "../components/Fragment"
 import { Teleport } from "../components/Teleport"
-import { isFunction, isSomeVNode, isString } from "@setsuna/share"
+import { isFunction, isSomeVNode, isString } from "@setsunajs/share"
 import { patchAwait } from "./patchOptions/await/patchAwait"
 import { patchSlot } from "./patchOptions/component/children"
 import { patchComponent } from "./patchOptions/component/patchComponent"

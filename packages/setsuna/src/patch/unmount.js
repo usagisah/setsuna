@@ -1,7 +1,7 @@
 import { Await } from "../components/Await"
 import { Teleport } from "../components/Teleport"
 import { Fragment } from "../components/Fragment"
-import { isFunction, isString } from "@setsuna/share"
+import { isFunction, isString } from "@setsunajs/share"
 import { unmountAwait } from "./patchOptions/await/unmountAwait"
 import { unmountComponent } from "./patchOptions/component/unmountComponent"
 import { ignoreElement } from "./patchOptions/element/ignoreElement"

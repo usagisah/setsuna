@@ -1,4 +1,4 @@
-import { isPlainObject, isString } from "@setsuna/share"
+import { isPlainObject, isString } from "@setsunajs/share"
 import { normalizeSlash } from "../parseRoutePath"
 import { excludeQuery, parseLocation } from "../parseLocation"
 import { createRouteRecord, EMPTY_RECORD } from "../createRouteRecord"

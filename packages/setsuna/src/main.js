@@ -1,4 +1,4 @@
-import "./hmr/hmr"
+export * from "./hmr/hmr"
 
 export { _jsx, isVNode } from "./jsx"
 export * from "./render"

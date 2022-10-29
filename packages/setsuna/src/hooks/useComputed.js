@@ -1,4 +1,4 @@
-import { isFunction, isPlainObject, noop } from "@setsuna/share"
+import { isFunction, isPlainObject, noop } from "@setsunajs/share"
 import { error } from "../handler/errorHandler"
 import { useEffect } from "./useEffect"
 import { createState } from "./useState"

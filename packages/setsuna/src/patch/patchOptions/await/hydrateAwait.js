@@ -1,7 +1,7 @@
 import { normalizeChildren } from "../../../external"
 import { getElementNextSibling, removeElement } from "../../../node/nodeOpts"
-import { resolveNextNodes } from "@setsuna/share"
-import { isFunction, isPromise } from "@setsuna/share"
+import { resolveNextNodes } from "@setsunajs/share"
+import { isFunction, isPromise } from "@setsunajs/share"
 import { hydrateFragment } from "../fragment/hydrateFragment"
 import { mountAwait } from "./mountAwait"
 

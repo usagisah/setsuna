@@ -1,5 +1,5 @@
-import { isPlainObject } from "@setsuna/share"
-import { nextTick } from "@setsuna/setsuna"
+import { isPlainObject } from "@setsunajs/share"
+import { nextTick } from "@setsunajs/setsuna"
 import { error } from "../handler"
 
 export function callEffectScroll(to, from, router) {

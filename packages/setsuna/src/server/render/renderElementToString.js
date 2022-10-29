@@ -3,7 +3,7 @@ import {
   omit,
   resolveObservableState,
   normalizeElementProps
-} from "@setsuna/share"
+} from "@setsunajs/share"
 import { nodeToString } from "../pipes/pipeNodeToString"
 
 export function renderElementToString({ VNode, parentComponent }) {

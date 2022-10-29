@@ -1,10 +1,10 @@
 {
   "name": "@setsunajs/observable",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "An implementation that conforms to the 'setsuna/observable' specification",
   "keywords": [
     "setsuna",
-    "@setsuna/observable"
+    "@setsunajs/observable"
   ],
   "homepage": "https://github.com/usagisah/setsuna#readme",
   "bugs": {
@@ -33,6 +33,6 @@
     "src"
   ],
   "dependencies": {
-    "@setsuna/share": "workspace:^0.0.1"
+    "@setsunajs/share": "^0.1.2"
   }
 }

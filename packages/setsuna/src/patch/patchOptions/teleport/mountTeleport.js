@@ -2,7 +2,7 @@ import { Fragment } from "../../../components/Fragment"
 import { _jsx } from "../../../jsx"
 import { querySelector } from "../../../node/nodeOpts"
 import { render } from "../../../render"
-import { isString } from "@setsuna/share"
+import { isString } from "@setsunajs/share"
 import { error } from "../../../handler/errorHandler"
 
 export function mountTeleport(context) {

@@ -1,4 +1,4 @@
-import { svgTags } from "@setsuna/share"
+import { svgTags } from "@setsunajs/share"
 import { Fragment } from "../components/Fragment"
 
 export function insertElement(child, parent, anchor) {

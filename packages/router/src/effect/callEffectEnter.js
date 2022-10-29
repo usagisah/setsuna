@@ -1,5 +1,5 @@
 import { createRouteRecord } from "../createRouteRecord"
-import { isString } from "@setsuna/share"
+import { isString } from "@setsunajs/share"
 import { parseLocation } from "../parseLocation"
 import { normalizeNavState } from "../history/web"
 import { callEffectNavigate } from "./callEffectNavigate"

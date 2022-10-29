@@ -2,7 +2,7 @@ import {
   createBrowserRouter as _createBrowserRouter,
   useRouter
 } from "./router"
-import { Observable } from "@setsuna/observable"
+import { Observable } from "@setsunajs/observable"
 import {
   nextTick,
   useComputed,
@@ -12,8 +12,8 @@ import {
   useProvide,
   useState,
   _jsx
-} from "@setsuna/setsuna"
-import { isFunction } from "@setsuna/share"
+} from "@setsunajs/setsuna"
+import { isFunction } from "@setsunajs/share"
 import { error } from "./handler"
 
 const INJECT_ROUTE_VIEW = "setsuna route view"

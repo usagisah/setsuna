@@ -1,5 +1,5 @@
-import { resolveObservableState } from "@setsuna/share"
-import { isArray } from "@setsuna/share"
+import { resolveObservableState } from "@setsunajs/share"
+import { isArray } from "@setsunajs/share"
 import { error } from "../handler/errorHandler"
 
 export function useEffect(subObs, subscribe) {

@@ -1,5 +1,5 @@
 {
-  "name": "@setsuna/setsuna-use",
+  "name": "@setsunajs/setsuna-use",
   "version": "0.0.1",
   "description": "@Tool library of `@setsuna/setsuna`",
   "keywords": [
@@ -17,7 +17,7 @@
     "dist"
   ],
   "dependencies": {
-    "@setsuna/setsuna": "workspace:^0.0.1",
-    "@setsuna/share": "workspace:^0.0.1"
+    "@setsunajs/setsuna": "workspace:^0.1.0",
+    "@setsunajs/share": "workspace:^0.1.0"
   }
 }

@@ -1,7 +1,7 @@
 import { createElement } from "../../../node/nodeOpts"
-import { normalizeElementProps } from "@setsuna/share"
-import { omit } from "@setsuna/share"
-import { isFunction } from "@setsuna/share"
+import { normalizeElementProps } from "@setsunajs/share"
+import { omit } from "@setsunajs/share"
+import { isFunction } from "@setsunajs/share"
 
 export function normalizeElementNode(node, create) {
   const { type, props, children } = node

@@ -1,4 +1,4 @@
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { callWithErrorHandler } from "./handler/callWithErrorHandler"
 import { error } from "./handler/errorHandler"
 

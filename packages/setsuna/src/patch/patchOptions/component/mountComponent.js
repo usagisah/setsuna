@@ -1,7 +1,7 @@
 import { callWithErrorHandler } from "../../../handler/callWithErrorHandler"
 import { registryRecord } from "../../../hmr/hmr"
 import { appendJob } from "../../../scheduler"
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { setCurrentInstance } from "./currentInstance"
 import { createRenderComponentEffect } from "./renderComponentEffect"
 import { error } from "../../../handler/errorHandler"

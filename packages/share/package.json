@@ -1,10 +1,10 @@
 {
   "name": "@setsunajs/share",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "@Tool functions shared internally by `@setsuna`",
   "keywords": [
     "setsuna",
-    "@setsuna/share"
+    "@setsunajs/share"
   ],
   "license": "MIT",
   "author": "@顾弦笙/usagisah <1286791152@qq.com>",
@@ -22,6 +22,6 @@
     "dist"
   ],
   "dependencies": {
-    "@setsuna/observable": "workspace:^0.0.1"
+    "@setsunajs/observable": "^0.1.2"
   }
 }

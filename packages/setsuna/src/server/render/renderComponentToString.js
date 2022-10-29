@@ -1,4 +1,4 @@
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { nodeToString } from "../pipes/pipeNodeToString"
 import { setCurrentInstance } from "../../patch/patchOptions/component/currentInstance"
 import { callWithErrorHandler } from "../../handler/callWithErrorHandler"

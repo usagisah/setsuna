@@ -1,4 +1,4 @@
-import { resolveObservableState } from "@setsuna/share"
+import { resolveObservableState } from "@setsunajs/share"
 
 export function setElementRef(e) {
   if (!e.ref) {

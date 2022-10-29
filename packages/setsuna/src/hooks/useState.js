@@ -1,11 +1,11 @@
 import { getCurrentInstance } from "../patch/patchOptions/component/currentInstance"
-import { isObservable, Observable, RETURN } from "@setsuna/observable"
+import { isObservable, Observable, RETURN } from "@setsunajs/observable"
 import {
   isArray,
   isFunction,
   resolveObservableState,
   def
-} from "@setsuna/share"
+} from "@setsunajs/share"
 import { error } from "../handler/errorHandler"
 
 export function createState(value, options) {

@@ -1,4 +1,4 @@
-import { isArray, isPromise, isString } from "@setsuna/share"
+import { isArray, isPromise, isString } from "@setsunajs/share"
 
 export const pipePipeBuffToStream = pipeBuffToStream
 

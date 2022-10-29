@@ -1,6 +1,6 @@
 import { callWithErrorHandler } from "../../../handler/callWithErrorHandler"
 import { appendJob, postQueue } from "../../../scheduler"
-import { isFunction } from "@setsuna/share"
+import { isFunction } from "@setsunajs/share"
 import { patch } from "../../patch"
 import { setCurrentInstance } from "./currentInstance"
 import { getNextSibling } from "../../../node/nodeOpts"

@@ -1,5 +1,5 @@
-import { resolveObservableState } from "@setsuna/share"
-import { isFunction } from "@setsuna/share"
+import { resolveObservableState } from "@setsunajs/share"
+import { isFunction } from "@setsunajs/share"
 import { createState } from "./useState"
 
 export function useRef(value) {

@@ -1,7 +1,7 @@
 import { removeAttr, removeEvent, setAttr, setEvent } from "../node/nodeOpts"
-import { resolveEventName } from "@setsuna/share"
-import { resolveObservableState } from "@setsuna/share"
-import { isBoolean, isFunction } from "@setsuna/share"
+import { resolveEventName } from "@setsunajs/share"
+import { resolveObservableState } from "@setsunajs/share"
+import { isBoolean, isFunction } from "@setsunajs/share"
 import { error } from "../handler/errorHandler"
 
 const patchedValue = Symbol("patchedValue")

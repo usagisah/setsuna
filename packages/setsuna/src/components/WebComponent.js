@@ -4,7 +4,7 @@ import { removeElement } from "../node/nodeOpts"
 import { ignoreElement } from "../patch/patchOptions/element/ignoreElement"
 import { unmount } from "../patch/unmount"
 import { hydrate, render } from "../render"
-import { noop } from "@setsuna/share"
+import { noop } from "@setsunajs/share"
 
 const records = window.__SETSUNA_CUSTOM_ELEMENT ?? new Map()
 

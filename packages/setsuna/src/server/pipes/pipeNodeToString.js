@@ -1,4 +1,4 @@
-import { isFunction, isString } from "@setsuna/share"
+import { isFunction, isString } from "@setsunajs/share"
 import { renderAwaitToString } from "../render/renderAwaitToString"
 import { renderChildrenToString } from "../render/renderChildrenToString"
 import { renderComponentToString } from "../render/renderComponentToString"
