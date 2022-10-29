@@ -1,6 +1,6 @@
 {
   "name": "@setsuna/share",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "@Tool functions shared internally by `@setsuna`",
   "keywords": [
     "setsuna",

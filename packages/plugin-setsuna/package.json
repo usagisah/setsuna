@@ -1,6 +1,6 @@
 {
   "name": "@setsuna/plugin-setsuna",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Provide @setsuna/setsuna jsx support with HMR",
   "keywords": [
     "setsuna",
