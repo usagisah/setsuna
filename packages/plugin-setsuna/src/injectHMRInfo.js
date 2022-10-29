@@ -21,7 +21,7 @@ export function injectHMRInfo({ id, body }) {
     }
 
     if (node.type === "VariableDeclaration") {
-      node = node.declarations.at(-1)
+      node = node.declarations.slice(-1)[0]
       useNode = node.init
     }
 
