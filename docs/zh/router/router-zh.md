@@ -1,13 +1,13 @@
 
 
-<h1 align="center">@setsuna/router</h1>
+<h1 align="center">@setsunajs/router</h1>
 
 
 
 
 ## 介绍
 
-`@setsuna/router`是官方提供的路由器
+`@setsunajs/router`是官方提供的路由器
 
 目前主要提供了如下的能力
 
@@ -23,7 +23,7 @@
 ## 下载
 
 ```bash
-npm i @setsuna/router
+npm i @setsunajs/router
 ```
 
 
@@ -57,7 +57,7 @@ npm i @setsuna/router
 
 ```javascript
 // router.js
-import { createBrowserRouter, Lazy } from "@setsuna/router"
+import { createBrowserRouter, Lazy } from "@setsunajs/router"
 import { Home } from "./components/Home"
 import { Error } from "./components/Error"
 
@@ -77,7 +77,7 @@ export const AppRouter = createBrowserRouter({
 
 ```javascript
 //main.jsx
-import { render } from "@setsuna/setsuna"
+import { render } from "@setsunajs/setsuna"
 import { App } from "./App"
 import { AppRouter } from "./router"
 
@@ -91,7 +91,7 @@ render(
 
 ```javascript
 //App.jsx
-import { RouterView } from "@setsuna/router"
+import { RouterView } from "@setsunajs/router"
 
 export function App() {
   return () => <RouterView />
@@ -105,7 +105,7 @@ export function App() {
 ## 创建路由
 
 ```javascript
-import { createBrowserRouter, RouterView } from "@setsuna/router"
+import { createBrowserRouter, RouterView } from "@setsunajs/router"
 ```
 
 `createBrowserRouter `用于创建`history`路由器，即地址栏上没有 `#`
@@ -114,7 +114,7 @@ import { createBrowserRouter, RouterView } from "@setsuna/router"
 
 ```javascript
 //main.jsx
-import { render } from "@setsuna/setsuna"
+import { render } from "@setsunajs/setsuna"
 import { App } from "./App"
 import { AppRouter } from "./router"
 
@@ -252,7 +252,7 @@ const AppRouter = createBrowserRouter({
 获取相关请求数据可以使用全局钩子`useLoaderData()` 进行获取，例如
 
 ```javascript
-import {useLoaderData} from "@setsuna/router"
+import {useLoaderData} from "@setsunajs/router"
 function App() {
   const data = useLoaderData()
   return () => <div>{ data }</div>
@@ -309,7 +309,7 @@ export const AppRouter = createBrowserRouter({
 用于进行跳转的 Api
 
 ```javascript
-import { RouterView, useNavigate } from "@setsuna/router"
+import { RouterView, useNavigate } from "@setsunajs/router"
 
 export function App() {
   const {

@@ -1,12 +1,12 @@
 
-<h1 align="center">@setsuna/observable</h1>
+<h1 align="center">@setsunajs/observable</h1>
 
 
 
 ## 下载
 
 ```bash
-npm i @setsuna/observable
+npm i @setsunajs/observable
 ```
 
 
@@ -14,7 +14,7 @@ npm i @setsuna/observable
 ## 使用
 
 ```javascript
-import { Observable } from "@setsuna/observable"
+import { Observable } from "@setsunajs/observable"
 
 // 创建一个流
 const subject = new Observable()
@@ -61,7 +61,7 @@ subject.complete()
 
 ## 介绍
 
-`@setsuna/router`是官方提供的`setsuna.js`响应式规范的基本实现，只要符合我们的规范您可以自定义创建您自己的`Observable`响应式函数
+`@setsunajs/router`是官方提供的`setsuna.js`响应式规范的基本实现，只要符合我们的规范您可以自定义创建您自己的`Observable`响应式函数
 
 如果您有接触过`rxjs`，会发现大体上的写法几乎一样，行为上有些像是`rxjs + promise`的结合体，比如错误透传是用的`throw error`，这是有意为之，也是故意做成了这个样子
 
